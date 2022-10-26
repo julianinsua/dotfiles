@@ -1,0 +1,44 @@
+extends javascript
+
+
+snippet tsc "Typescript/React stateless component" b
+import { FC } from 'react'
+
+interface Props {
+
+}
+
+const ${1:`!v expand('%:t:r')`}: FC<Props> = ({}) => {
+	return null$0
+}
+
+${1:`!v expand('%:t:r')`}.defaultProps = {
+	
+}
+
+export default $1
+endsnippet
+
+snippet const "ts const"
+	const ${1}: ${2:any} = ${3};
+	${0}
+endsnippet
+
+snippet let "ts let"
+	let ${1}: ${2:any} = ${3};
+	${0}
+endsnippet
+
+snippet int "interface"
+	interface ${1} {
+		${2}: ${3:any};
+		${0}
+	}
+endsnippet
+
+snippet intx "interface extends"
+	interface ${1} extends ${2} {
+		${3}: ${4:any};
+		${0}
+	}
+endsnippet

@@ -1,0 +1,14 @@
+{
+  "suggest.noselect": false,
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snippets",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "json",
+    "javascriptreact",
+    "typescript.tsx",
+    "graphql",
+    "css",
+    "markdown"
+  ]
+}
