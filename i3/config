@@ -129,20 +129,20 @@ set $ws10 "10"
 # Assign programs to workspaces
 assign [class="firefox"] $ws1
 for_window [class='Spotify'] move to workspace 3
-assign [class="Mailspring"] $ws4
-assign [class="jetbrains-webstorm"] $ws5
+assign [class="jetbrains-webstorm"] $ws8
 assign [class="Google-chrome"] $ws4
-assign [class="teams-for-linux"] $ws7
+assign [class="teams-for-linux"] $ws5
+assign [class="obsidian"] $ws8
 
 # Keyboard shortcuts for applications
-bindsym Mod1+5 exec webstorm
+bindsym Mod1+8 exec webstorm
 bindsym Mod1+2 exec kitty -e tmux
 bindsym Mod1+1 exec firefox
 bindsym Mod1+# exec kitty -e spt
 bindsym Mod1+3 exec spotify
-bindsym Mod1+6 exec google-chrome-stable
-bindsym Mod1+7 exec teams-for-linux
-bindsym Mod1+4 exec kitty -e ranger /home/julian/
+bindsym Mod1+4 exec google-chrome-stable
+bindsym Mod1+5 exec teams-for-linux
+bindsym Mod1+6 exec kitty -e ranger /home/julian/
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -177,9 +177,12 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out from i3? This will end your X session.' -B 'Yes' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out from i3? This will end your X session.' -B 'Yes' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "~/.config/i3/scripts/rofi-logout.sh" 
 # Lock your i3 session
-# bindsym Mod1+l exec loginctl lock-session
+ bindsym $mod+Mod1+L exec "~/.config/i3/scripts/rofi-powermenu.sh"
+
+bindsym $mod+Shift+Escape exec "shutdown -h now"
 
 
 # resize window (you can also use the mouse for that)
