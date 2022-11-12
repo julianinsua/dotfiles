@@ -1,6 +1,6 @@
 "      ___________ - Written By Julian Insua
 "     /__  __  __/ - Stolen from many others
-"       / / / /    - File:
+"       / / / /    - File:init.vim
 "  __  / / / /     - Date:
 " / /_/ /_/ /__    - Comments:
 " \____/______/    -
@@ -33,7 +33,8 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'gruvbox-community/gruvbox'                     " This is the Gruvbox colortheme for vim 
   Plug 'https://github.com/preservim/nerdtree'        " This is the file navigator
   Plug 'Xuyuanp/nerdtree-git-plugin'                  " This gives you git status on nerdtree
-  Plug 'airblade/vim-gitgutter'                       " This gives you some signs on the gutter that indicate what's new and what was moddified, etc in the file
+"  Plug 'airblade/vim-gitgutter'                       " This gives you some signs on the gutter that indicate what's new and what was moddified, etc in the file
+  Plug 'lewis6991/gitsigns.nvim'                      " This gives you some signs on the gutter that indicate what's new and what was moddified, etc in the file
   Plug 'tpope/vim-fugitive'                           " This allows you to do git stuff from within vim
   Plug 'ap/vim-css-color'                             " This previews hex colors on css
   Plug 'ryanoasis/vim-devicons'                       " This are the development icons
