@@ -1,4 +1,3 @@
-
 --      ___________ - Written By Julian Insua
 --     /__  __  __/ - Stolen from many others
 --       / / / /    - File: init.lua
@@ -29,30 +28,37 @@ vim.opt.scrolloff = 4
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.config/nvim/plugged')
-  Plug 'kassio/neoterm'                                   --Get a terminal working inside vim
-  Plug 'nvim-lualine/lualine.nvim'                      -- This is the status bar
-  Plug 'kyazdani42/nvim-web-devicons'                   -- Icons for the statusbar
-  Plug 'gruvbox-community/gruvbox'                      -- This is the Gruvbox colortheme for vim 
---  Plug 'https://github.com/preservim/nerdtree'          -- This is the file navigator
-  Plug 'nvim-tree/nvim-tree.lua'                        -- This is the file navigator
-  Plug 'Xuyuanp/nerdtree-git-plugin'                    -- This gives you git status on nerdtree
-  Plug 'lewis6991/gitsigns.nvim'                        -- This gives you some signs on the gutter that indicate what's new and what was moddified, etc in the file
-  Plug 'tpope/vim-fugitive'                             -- This allows you to do git stuff from within vim
-  Plug 'ap/vim-css-color'                               -- This previews hex colors on css
-  Plug 'ryanoasis/vim-devicons'                         -- This are the development icons
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'        -- This enhances the appearance of vim nerd tree and devicons
-  Plug ('mg979/vim-visual-multi', {branch = 'master'})  -- This allows for multiple cursors 
-  Plug 'sheerun/vim-polyglot'                           -- This allows higlighting for almost every language out there
-  Plug 'jiangmiao/auto-pairs'                           -- This autocloses most surrounders
-  Plug 'alvan/vim-closetag'                             -- This autocloses HTML tags
-  Plug 'tpope/vim-surround'                             -- Allows surrounding selected text and other surrounding actions
-  Plug('neoclide/coc.nvim', {branch = 'release'})      -- This allows autocompletion 
-  Plug 'tpope/vim-commentary'                           -- This allows commenting lines of code with shortcuts
-  Plug 'yggdroot/indentline'                            -- This shows a line for each indentation
-  Plug 'junegunn/fzf'                                   -- This is the fuzzy find algorithm
-  Plug 'junegunn/fzf.vim'                               -- This is the adapter for vim of the fuzzy find algorithm
-  Plug 'puremourning/vimspector'                        -- This is the debugger for vim
-  Plug 'andymass/vim-matchup'                           -- This extends the functionality of % to code elements and tags
+Plug 'kassio/neoterm' --Get a terminal working inside vim
+Plug 'nvim-lualine/lualine.nvim' -- This is the status bar
+Plug 'kyazdani42/nvim-web-devicons' -- Icons for the statusbar
+Plug 'gruvbox-community/gruvbox' -- This is the Gruvbox colortheme for vim
+Plug 'nvim-tree/nvim-tree.lua' -- This is the file navigator
+Plug 'lewis6991/gitsigns.nvim' -- This gives you some signs on the gutter that indicate what's new and what was moddified, etc in the file
+Plug 'tpope/vim-fugitive' -- This allows you to do git stuff from within vim
+Plug 'ap/vim-css-color' -- This previews hex colors on css
+Plug 'ryanoasis/vim-devicons' -- This are the development icons
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' -- This enhances the appearance of vim nerd tree and devicons
+Plug('mg979/vim-visual-multi', { branch = 'master' }) -- This allows for multiple cursors
+Plug 'sheerun/vim-polyglot' -- This allows higlighting for almost every language out there
+Plug 'jiangmiao/auto-pairs' -- This autocloses most surrounders
+Plug 'alvan/vim-closetag' -- This autocloses HTML tags
+Plug 'tpope/vim-surround' -- Allows surrounding selected text and other surrounding actions
+--Plug('neoclide/coc.nvim', {branch = 'release'})      -- This allows autocompletion
+Plug 'neovim/nvim-lspconfig' -- This allows easier configuration for the language server protocol (LSP)
+Plug 'hrsh7th/nvim-cmp' -- This provides autocompletion using native LSP
+Plug 'hrsh7th/cmp-nvim-lsp' -- This provides autocompletion using native LSP
+Plug 'hrsh7th/cmp-buffer' -- This provides autocompletion using native LSP
+Plug 'hrsh7th/cmp-path' -- This provides autocompletion using native LSP
+Plug 'hrsh7th/cmp-vsnip' -- This is snippet support for nvim-cmp
+Plug 'hrsh7th/vim-vsnip' -- This is the snippet engine
+Plug 'nvim-telescope/telescope.nvim' -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
+Plug 'nvim-lua/plenary.nvim' -- This is a required dependency of telescope.
+Plug 'tpope/vim-commentary' -- This allows commenting lines of code with shortcuts
+Plug 'yggdroot/indentline' -- This shows a line for each indentation
+Plug 'junegunn/fzf' -- This is the fuzzy find algorithm
+Plug 'junegunn/fzf.vim' -- This is the adapter for vim of the fuzzy find algorithm
+Plug 'puremourning/vimspector' -- This is the debugger for vim
+Plug 'andymass/vim-matchup' -- This extends the functionality of % to code elements and tags
 vim.call('plug#end')
 
 vim.g.mapleader = ' '
@@ -65,11 +71,11 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'gruvbox-material',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
+    component_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {
-      statusline = {'NvimTree'},
-      tabline = {'NvimTree'},
+      statusline = { 'NvimTree' },
+      tabline = { 'NvimTree' },
       winbar = {},
     },
     ignore_focus = {},
@@ -82,42 +88,178 @@ require('lualine').setup {
     }
   },
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_c = { 'filename' },
+    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
+    lualine_c = { 'filename' },
+    lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {}
   },
   tabline = {
-    lualine_a = {'buffers'},
+    lualine_a = { 'buffers' },
     lualine_b = {},
     lualine_c = {},
     lualine_x = {},
     lualine_y = {},
-    lualine_z = {'tabs'}
+    lualine_z = { 'tabs' }
   },
   winbar = {},
   inactive_winbar = {},
   extensions = {}
 }
 
+-- Configuration for GitSigns
+require('gitsigns').setup {
+  signs                        = {
+    add          = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+    change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+    delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+    topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+    changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+    untracked    = { hl = 'GitSignsAdd', text = '┆', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+  },
+  signcolumn                   = true, -- Toggle with `:Gitsigns toggle_signs`
+  numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir                 = {
+    interval = 1000,
+    follow_files = true
+  },
+  attach_to_untracked          = true,
+  current_line_blame           = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts      = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+  },
+  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+  sign_priority                = 6,
+  update_debounce              = 100,
+  status_formatter             = nil, -- Use default
+  max_file_length              = 40000, -- Disable if file is longer than this (in lines)
+  preview_config               = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm                         = {
+    enable = false
+  },
+}
+-- LSP Configuration for different languages
+local create_lsp_bindings = function()
+  vim.keymap.set('n', '<leader>K', vim.lsp.buf.hover, { buffer = 0 })
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = 0 })
+  vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, { buffer = 0 }) -- This one is more for statically typed languages
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = 0 })
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = 0 })
+  vim.keymap.set('n', '<leader>ej', vim.diagnostic.goto_next, { buffer = 0 })
+  vim.keymap.set('n', '<leader>ek', vim.diagnostic.goto_prev, { buffer = 0 })
+  vim.keymap.set('n', '<leader>el', ':Telescope diagnostics', { buffer = 0 }) --Lists all errors and lets you navigate the list with telescope
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = 0 }) --Lets you do stuff automatically like importing sth or organizing imports
+end
+
+local set_lsp_formatting = function(client, bufnr)
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = vim.api.nvim_create_augroup('Format', { clear = true }),
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.formatting_seq_sync() end
+    })
+  end
+end
+
+-- PYTHON
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('lspconfig').pyright.setup {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    print('pyright LSP attached')
+    create_lsp_bindings()
+    set_lsp_formatting(client, bufnr)
+  end,
+}
+
+-- TYPESCRIPT
+require('lspconfig').tsserver.setup {
+  capabilities = capabilities,
+  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact', 'javascript.jsx' },
+  cmd = { 'typescript-language-server', '--stdio' },
+  on_attach = function()
+    print('Typescript LSP attached')
+    create_lsp_bindings()
+  end,
+}
+
+-- LUA
+require('lspconfig').sumneko_lua.setup {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    print('LUA LSP attached')
+    create_lsp_bindings()
+    set_lsp_formatting(client, bufnr)
+  end,
+}
+
+
+-- Configure nvim-cmp to work with lsp for autocompletion
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+local cmp = require('cmp')
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' }, -- For vsnip users.
+  }, {
+    { name = 'buffer' },
+  })
+}
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+  }, {
+    { name = 'buffer' },
+  })
+})
 
 -- Go to file, if it doesnt exist create it
 vim.keymap.set('', 'gf', ':edit <cfile><CR>')
 
 -- Navigate split buffers using Space h,l close with Space Q
-vim.keymap.set('n', '<leader>l', ':bnext<CR>', {silent = true})
-vim.keymap.set('n', '<leader>h', ':bprevious<CR>', {silent = true})
-vim.keymap.set('n', '<leader>Q', ':bdelete!<CR>', {silent = true})
+vim.keymap.set('n', '<leader>l', ':bnext<CR>', { silent = true })
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { silent = true })
+vim.keymap.set('n', '<leader>Q', ':bdelete!<CR>', { silent = true })
 
 -- Save all with Ctrl+s
 vim.keymap.set('n', '<C-s>', ':wa<CR>')
@@ -140,10 +282,7 @@ vim.keymap.set('n', '<M-l>', '<C-w>>')
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
--- Open Nvimtree with Ctrl+t
+-- Open Nvimtree with Space t
 vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>')
 
 -- empty setup using defaults
@@ -164,7 +303,8 @@ vim.keymap.set('n', '<M-b>', ':Buffers<CR>')
 -- Search text within files usinf fzf and ripgrep (rg) with :F and shortcut to Alt+f
 vim.g.rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{js,ts,jsx,tsx,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf,css,scss}" -g "!{.git,node_modules,vendor}/*" '
 
-vim.api.nvim_create_user_command('F', 'call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)', {bang=true, nargs='*'})
+vim.api.nvim_create_user_command('F', 'call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)',
+  { bang = true, nargs = '*' })
 
 vim.keymap.set('n', '<M-F>', ':F<CR>')
 
@@ -172,10 +312,10 @@ vim.keymap.set('n', '<M-F>', ':F<CR>')
 vim.keymap.set('n', '<leader>rn', '<Plug>(coc-rename)')
 
 -- Override go to definition (gd) to go to different files if needed
-vim.keymap.set('n', 'gd', '<Plug>(coc-definition)', {silent=true})
+vim.keymap.set('n', 'gd', '<Plug>(coc-definition)', { silent = true })
 
 -- Find other implementations of whatever you are standing on
-vim.keymap.set('n', 'gi', '<Plug>(coc-implementation)', {silent=true})
+vim.keymap.set('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
 
 vim.g.vimspector_base_dir = '/home/julian/.config/nvim/plugged/vimspector'
 vim.keymap.set('n', '<leader>da', ':call vimspector#Launch()<CR>')
@@ -189,5 +329,3 @@ vim.keymap.set('n', '<leader>drc', ':call vimspector#RunToCursor()<CR>')
 vim.keymap.set('n', '<leader>dh', ':call vimspector#ToggleBreakpoint()<CR>')
 vim.keymap.set('n', '<leader>de', ':call vimspector#ToggleConditionalBreakpoint()<CR>')
 vim.keymap.set('n', '<leader>dX', ':call vimspector#ClearBreakpoint()<CR>')
-
-
