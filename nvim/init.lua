@@ -28,7 +28,7 @@ vim.opt.scrolloff = 4
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.config/nvim/plugged')
-Plug 'kassio/neoterm' --Get a terminal working inside vim
+Plug 'kassio/neoterm' --Get a terminal working inside vim (not using it, investigate and decide)
 Plug 'nvim-lualine/lualine.nvim' -- This is the status bar
 Plug 'kyazdani42/nvim-web-devicons' -- Icons for the statusbar
 Plug 'gruvbox-community/gruvbox' -- This is the Gruvbox colortheme for vim
@@ -37,7 +37,7 @@ Plug 'lewis6991/gitsigns.nvim' -- This gives you some signs on the gutter that i
 Plug 'tpope/vim-fugitive' -- This allows you to do git stuff from within vim
 Plug 'ap/vim-css-color' -- This previews hex colors on css
 Plug 'ryanoasis/vim-devicons' -- This are the development icons
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight' -- This enhances the appearance of vim nerd tree and devicons
+--Plug 'tiagofumo/vim-nerdtree-syntax-highlight' -- This enhances the appearance of vim nerd tree and devicons
 Plug('mg979/vim-visual-multi', { branch = 'master' }) -- This allows for multiple cursors
 Plug 'sheerun/vim-polyglot' -- This allows higlighting for almost every language out there
 Plug 'jiangmiao/auto-pairs' -- This autocloses most surrounders
@@ -51,12 +51,14 @@ Plug 'hrsh7th/cmp-buffer' -- This provides autocompletion using native LSP
 Plug 'hrsh7th/cmp-path' -- This provides autocompletion using native LSP
 Plug 'hrsh7th/cmp-vsnip' -- This is snippet support for nvim-cmp
 Plug 'hrsh7th/vim-vsnip' -- This is the snippet engine
-Plug 'nvim-telescope/telescope.nvim' -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
+Plug 'jose-elias-alvarez/null-ls.nvim' --Gives the LSP support for third party formatters like prettier
+Plug('nvim-telescope/telescope.nvim', { branch = '0.1.x' }) -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
 Plug 'nvim-lua/plenary.nvim' -- This is a required dependency of telescope.
+Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' }) -- This allows Telescope to use the fzf algorithm
 Plug 'tpope/vim-commentary' -- This allows commenting lines of code with shortcuts
 Plug 'yggdroot/indentline' -- This shows a line for each indentation
-Plug 'junegunn/fzf' -- This is the fuzzy find algorithm
-Plug 'junegunn/fzf.vim' -- This is the adapter for vim of the fuzzy find algorithm
+-- Plug 'junegunn/fzf' -- This is the fuzzy find algorithm
+-- Plug 'junegunn/fzf.vim' -- This is the adapter for vim of the fuzzy find algorithm
 Plug 'puremourning/vimspector' -- This is the debugger for vim
 Plug 'andymass/vim-matchup' -- This extends the functionality of % to code elements and tags
 vim.call('plug#end')
@@ -173,14 +175,32 @@ local create_lsp_bindings = function()
 end
 
 local set_lsp_formatting = function(client, bufnr)
+  -- if client.name == 'tsserver' then
+  --   client.resolved_capabilities.document_formatting = false
+  --   vim.api.nvim_create_autocmd('BufWritePre', {
+  --     group = vim.api.nvim_create_augroup('Format', { clear = true }),
+  --     buffer = bufnr,
+  --     callback = function() vim.lsp.buf.format() end
+  --   })
+  -- end
   if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = vim.api.nvim_create_augroup('Format', { clear = true }),
       buffer = bufnr,
-      callback = function() vim.lsp.buf.formatting_seq_sync() end
+      callback = function()
+        vim.lsp.buf.format()
+        print('Format applied')
+      end
     })
   end
 end
+
+require('null-ls').setup({
+  sources = {
+    require('null-ls').builtins.formatting.prettier,
+    require('null-ls').builtins.formatting.eslint,
+  }
+})
 
 -- PYTHON
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -198,9 +218,10 @@ require('lspconfig').tsserver.setup {
   capabilities = capabilities,
   filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact', 'javascript.jsx' },
   cmd = { 'typescript-language-server', '--stdio' },
-  on_attach = function()
+  on_attach = function(client, bufnr)
     print('Typescript LSP attached')
     create_lsp_bindings()
+    set_lsp_formatting(client, bufnr)
   end,
 }
 
@@ -288,34 +309,34 @@ vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>')
 -- empty setup using defaults
 require("nvim-tree").setup()
 
--- Open fzf and search git tree files with Alt+g
-vim.keymap.set('n', '<M-g>', ':Gfiles<CR>')
+-- Telescope configuration
+require('telescope').setup {
+  defaults = {
+    prompt_prefix = ' '
+  }
+}
+require('telescope').load_extension('fzf')
+local builtin = require('telescope.builtin')
+-- Open Telescope and search git tree files with Alt+g
+vim.keymap.set('n', '<leader>fg', builtin.git_files)
 
--- Open fzf and find files in home directory with Alt+.
-vim.keymap.set('n', '<M-.>', ':Files ~/<CR>')
+-- Open Telescope and find files in home directory with Alt+.
+vim.keymap.set('n', '<leader>ff', builtin.find_files)
 
--- Open fzf and search lines inside the current buffer with Alt+f
-vim.keymap.set('n', '<M-f>', ':Blines<CR>')
+-- Open Telescope and search lines inside the current buffer with Alt+f
+vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
 
--- Open fzf with open buffers wit Alt+b
-vim.keymap.set('n', '<M-b>', ':Buffers<CR>')
+-- Open Telescope with open buffers wit Alt+b
+vim.keymap.set('n', '<leader>fb', builtin.buffers)
 
 -- Search text within files usinf fzf and ripgrep (rg) with :F and shortcut to Alt+f
-vim.g.rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{js,ts,jsx,tsx,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf,css,scss}" -g "!{.git,node_modules,vendor}/*" '
+vim.keymap.set('n', '<leader>fL', builtin.live_grep)
+--vim.g.rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{js,ts,jsx,tsx,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf,css,scss}" -g "!{.git,node_modules,vendor}/*" '
 
-vim.api.nvim_create_user_command('F', 'call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)',
-  { bang = true, nargs = '*' })
+--vim.api.nvim_create_user_command('F', 'call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)',
+--{ bang = true, nargs = '*' })
 
-vim.keymap.set('n', '<M-F>', ':F<CR>')
-
--- Refactor rename sth using Space r n
-vim.keymap.set('n', '<leader>rn', '<Plug>(coc-rename)')
-
--- Override go to definition (gd) to go to different files if needed
-vim.keymap.set('n', 'gd', '<Plug>(coc-definition)', { silent = true })
-
--- Find other implementations of whatever you are standing on
-vim.keymap.set('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
+-- vim.keymap.set('n', '<M-F>', ':F<CR>')
 
 vim.g.vimspector_base_dir = '/home/julian/.config/nvim/plugged/vimspector'
 vim.keymap.set('n', '<leader>da', ':call vimspector#Launch()<CR>')
