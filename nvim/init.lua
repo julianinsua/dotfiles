@@ -37,13 +37,11 @@ Plug 'lewis6991/gitsigns.nvim' -- This gives you some signs on the gutter that i
 Plug 'tpope/vim-fugitive' -- This allows you to do git stuff from within vim
 Plug 'ap/vim-css-color' -- This previews hex colors on css
 Plug 'ryanoasis/vim-devicons' -- This are the development icons
---Plug 'tiagofumo/vim-nerdtree-syntax-highlight' -- This enhances the appearance of vim nerd tree and devicons
 Plug('mg979/vim-visual-multi', { branch = 'master' }) -- This allows for multiple cursors
 Plug 'sheerun/vim-polyglot' -- This allows higlighting for almost every language out there
 Plug 'jiangmiao/auto-pairs' -- This autocloses most surrounders
 Plug 'alvan/vim-closetag' -- This autocloses HTML tags
 Plug 'tpope/vim-surround' -- Allows surrounding selected text and other surrounding actions
---Plug('neoclide/coc.nvim', {branch = 'release'})      -- This allows autocompletion
 Plug 'neovim/nvim-lspconfig' -- This allows easier configuration for the language server protocol (LSP)
 Plug 'hrsh7th/nvim-cmp' -- This provides autocompletion using native LSP
 Plug 'hrsh7th/cmp-nvim-lsp' -- This provides autocompletion using native LSP
@@ -57,9 +55,14 @@ Plug 'nvim-lua/plenary.nvim' -- This is a required dependency of telescope.
 Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' }) -- This allows Telescope to use the fzf algorithm
 Plug 'tpope/vim-commentary' -- This allows commenting lines of code with shortcuts
 Plug 'yggdroot/indentline' -- This shows a line for each indentation
--- Plug 'junegunn/fzf' -- This is the fuzzy find algorithm
--- Plug 'junegunn/fzf.vim' -- This is the adapter for vim of the fuzzy find algorithm
 Plug 'puremourning/vimspector' -- This is the debugger for vim
+-- Comented out plugins are for nvim-dap debugger. Couldn't make it work. I guess I'll try later.
+-- Plug 'mfussenegger/nvim-dap' -- This is the Debugging tool that plays nice with nvim (pending)
+-- Plug 'mxsdev/nvim-dap-vscode-js' -- Extension that allows you to use the vscode-js-debug adapter
+-- Plug('microsoft/vscode-js-debug', { opt = true, run = 'npm install --legacy-peer-deps && npm run compile' })
+-- Plug 'rcarriga/nvim-dap-ui' -- This is the UI for the nvim-dap debugger (plays nice with nvim)(pending)
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' }) -- This provides better sintax highlighting
+-- Plug 'thehamsta/nvim-dap-virtual-text' -- This allows nvim-dap to evaluate your code and show you a preview
 Plug 'andymass/vim-matchup' -- This extends the functionality of % to code elements and tags
 vim.call('plug#end')
 
@@ -69,11 +72,21 @@ vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_transparent_bg = '1'
 vim.cmd('colorscheme gruvbox')
 
+-- Function to return the total number of lines in a buffer in lualine
+local totalLineNumber = function()
+  return " " .. vim.fn.line('.') .. ' / ' .. vim.fn.line('$') .. " 並"
+end
+
+local currentBufferPath = function()
+  return vim.fn.expand('%')
+end
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'gruvbox-material',
-    component_separators = { left = '', right = '' },
+    -- component_separators = { left = '', right = '' },
+    component_separators = { left = ' ', right = ' ' },
     section_separators = { left = '', right = '' },
     disabled_filetypes = {
       statusline = { 'NvimTree' },
@@ -81,7 +94,7 @@ require('lualine').setup {
       winbar = {},
     },
     ignore_focus = {},
-    always_divide_middle = true,
+    always_divide_middle = false,
     globalstatus = false,
     refresh = {
       statusline = 1000,
@@ -91,16 +104,19 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
-    lualine_c = { 'filename' },
-    lualine_x = { 'encoding', 'fileformat', 'filetype' },
-    lualine_y = { 'progress' },
+    -- lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_b = { 'branch', 'diagnostics' },
+    -- lualine_c = { currentBufferPath, 'filename' },
+    lualine_c = { currentBufferPath },
+    -- lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_x = { 'filetype' },
+    lualine_y = { 'progress', totalLineNumber },
     lualine_z = { 'location' }
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = { 'filename' },
+    lualine_c = { currentBufferPath },
     lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {}
@@ -110,8 +126,8 @@ require('lualine').setup {
     lualine_b = {},
     lualine_c = {},
     lualine_x = {},
-    lualine_y = {},
-    lualine_z = { 'tabs' }
+    lualine_y = { 'tabs' },
+    lualine_z = {}
   },
   winbar = {},
   inactive_winbar = {},
@@ -168,8 +184,8 @@ local create_lsp_bindings = function()
   vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, { buffer = 0 }) -- This one is more for statically typed languages
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = 0 })
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = 0 })
-  vim.keymap.set('n', '<leader>ej', vim.diagnostic.goto_next, { buffer = 0 })
-  vim.keymap.set('n', '<leader>ek', vim.diagnostic.goto_prev, { buffer = 0 })
+  vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_next, { buffer = 0 })
+  vim.keymap.set('n', '<leader>eN', vim.diagnostic.goto_prev, { buffer = 0 })
   vim.keymap.set('n', '<leader>el', ':Telescope diagnostics', { buffer = 0 }) --Lists all errors and lets you navigate the list with telescope
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = 0 }) --Lets you do stuff automatically like importing sth or organizing imports
 end
@@ -188,7 +204,7 @@ local set_lsp_formatting = function(client, bufnr)
       group = vim.api.nvim_create_augroup('Format', { clear = true }),
       buffer = bufnr,
       callback = function()
-        vim.lsp.buf.format()
+        vim.lsp.buf.format({ timeout_ms = 2000 })
         print('Format applied')
       end
     })
@@ -274,6 +290,21 @@ cmp.setup.filetype('gitcommit', {
   })
 })
 
+
+require 'nvim-treesitter.configs'.setup {
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true, -- false will disable the whole extension
+    -- disable = { "c", "rust" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
 -- Go to file, if it doesnt exist create it
 vim.keymap.set('', 'gf', ':edit <cfile><CR>')
 
@@ -312,31 +343,41 @@ require("nvim-tree").setup()
 -- Telescope configuration
 require('telescope').setup {
   defaults = {
-    prompt_prefix = ' '
+    prompt_prefix = ' ',
+    mappings = {
+      n = {
+        ["cd"] = function(prompt_bufnr)
+          local selection = require("telescope.actions.state").get_selected_entry()
+          local dir = vim.fn.fnamemodify(selection.path, ":p:h")
+          require("telescope.actions").close(prompt_bufnr)
+          -- Depending on what you want put `cd`, `lcd`, `tcd`
+          vim.cmd(string.format("silent lcd %s", dir))
+        end
+      }
+    }
   }
 }
+
 require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
--- Open Telescope and search git tree files with Alt+g
+-- Open Telescope and search git tree files with Space fg
 vim.keymap.set('n', '<leader>fg', builtin.git_files)
 
--- Open Telescope and find files in home directory with Alt+.
-vim.keymap.set('n', '<leader>ff', builtin.find_files)
+-- Open Telescope and find files in home directory with Space ff
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files cwd=~/<CR>')
 
--- Open Telescope and search lines inside the current buffer with Alt+f
+-- Open Telescope and search lines inside the current buffer with Space fl
 vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
 
--- Open Telescope with open buffers wit Alt+b
+-- Open Telescope with open buffers wit Space fb
 vim.keymap.set('n', '<leader>fb', builtin.buffers)
 
--- Search text within files usinf fzf and ripgrep (rg) with :F and shortcut to Alt+f
+-- Search text within files usinf fzf and ripgrep (rg) in Telescope with Space fL
 vim.keymap.set('n', '<leader>fL', builtin.live_grep)
---vim.g.rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{js,ts,jsx,tsx,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf,css,scss}" -g "!{.git,node_modules,vendor}/*" '
 
---vim.api.nvim_create_user_command('F', 'call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)',
---{ bang = true, nargs = '*' })
+--Search history with Space fh
+vim.keymap.set('n', '<leader>fh', builtin.oldfiles)
 
--- vim.keymap.set('n', '<M-F>', ':F<CR>')
 
 vim.g.vimspector_base_dir = '/home/julian/.config/nvim/plugged/vimspector'
 vim.keymap.set('n', '<leader>da', ':call vimspector#Launch()<CR>')
@@ -349,4 +390,4 @@ vim.keymap.set('n', '<leader>dn', ':call vimspector#Continue()<CR>')
 vim.keymap.set('n', '<leader>drc', ':call vimspector#RunToCursor()<CR>')
 vim.keymap.set('n', '<leader>dh', ':call vimspector#ToggleBreakpoint()<CR>')
 vim.keymap.set('n', '<leader>de', ':call vimspector#ToggleConditionalBreakpoint()<CR>')
-vim.keymap.set('n', '<leader>dX', ':call vimspector#ClearBreakpoint()<CR>')
+vim.keymap.set('n', '<leader>dX', ':call vimspector#ClearBreakpoints()<CR>')
