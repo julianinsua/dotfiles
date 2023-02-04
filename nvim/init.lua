@@ -23,7 +23,10 @@ vim.opt.smartcase = true
 vim.opt.signcolumn = "yes:2"
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 4
--- vim.cmd('syntax on')
+vim.opt.ai = true
+vim.opt.si = true
+vim.o.undofile = true
+vim.o.updatetime = 250
 
 local Plug = vim.fn['plug#']
 
@@ -39,21 +42,24 @@ Plug 'ap/vim-css-color' -- This previews hex colors on css
 Plug 'ryanoasis/vim-devicons' -- This are the development icons
 Plug('mg979/vim-visual-multi', { branch = 'master' }) -- This allows for multiple cursors
 Plug 'sheerun/vim-polyglot' -- This allows higlighting for almost every language out there
-Plug 'jiangmiao/auto-pairs' -- This autocloses most surrounders
+Plug 'windwp/nvim-autopairs' -- This allows autopais and works nice with the lsp
 Plug 'alvan/vim-closetag' -- This autocloses HTML tags
 Plug 'tpope/vim-surround' -- Allows surrounding selected text and other surrounding actions
 Plug 'neovim/nvim-lspconfig' -- This allows easier configuration for the language server protocol (LSP)
+Plug 'williamboman/nvim-lsp-installer' -- This allows you to install lsp servers in an easier way
 Plug 'hrsh7th/nvim-cmp' -- This provides autocompletion using native LSP
 Plug 'hrsh7th/cmp-nvim-lsp' -- This provides autocompletion using native LSP
 Plug 'hrsh7th/cmp-buffer' -- This provides autocompletion using native LSP
 Plug 'hrsh7th/cmp-path' -- This provides autocompletion using native LSP
 Plug 'hrsh7th/cmp-vsnip' -- This is snippet support for nvim-cmp
 Plug 'hrsh7th/vim-vsnip' -- This is the snippet engine
+Plug 'rafamadriz/friendly-snippets' -- This gives you common snippets on the go, without you having to write them yourself
 Plug 'jose-elias-alvarez/null-ls.nvim' --Gives the LSP support for third party formatters like prettier
 Plug('nvim-telescope/telescope.nvim', { branch = '0.1.x' }) -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
 Plug 'nvim-lua/plenary.nvim' -- This is a required dependency of telescope.
 Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' }) -- This allows Telescope to use the fzf algorithm
-Plug 'tpope/vim-commentary' -- This allows commenting lines of code with shortcuts
+-- Plug 'tpope/vim-commentary' -- This allows commenting lines of code with shortcuts
+Plug 'numToStr/Comment.nvim' -- This allows commenting lines of code with shortcuts
 Plug 'yggdroot/indentline' -- This shows a line for each indentation
 Plug 'puremourning/vimspector' -- This is the debugger for vim
 -- Comented out plugins are for nvim-dap debugger. Couldn't make it work. I guess I'll try later.
@@ -64,9 +70,19 @@ Plug 'puremourning/vimspector' -- This is the debugger for vim
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' }) -- This provides better sintax highlighting
 -- Plug 'thehamsta/nvim-dap-virtual-text' -- This allows nvim-dap to evaluate your code and show you a preview
 Plug 'andymass/vim-matchup' -- This extends the functionality of % to code elements and tags
+Plug('glacambre/firenvim', { ['do'] = function() vim.fn("firenvim#install(0)") end })
+-- Plug('luk400/vim-jukit') --This lets you work with Jupyter notebooks and .ipynb files without leaving nvim (worked fine but had problems configuring maps in lua)
 vim.call('plug#end')
 
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- Keymaps for better default experience
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_transparent_bg = '1'
@@ -178,45 +194,56 @@ require('gitsigns').setup {
   },
 }
 -- LSP Configuration for different languages
-local create_lsp_bindings = function()
-  vim.keymap.set('n', '<leader>K', vim.lsp.buf.hover, { buffer = 0 })
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = 0 })
-  vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, { buffer = 0 }) -- This one is more for statically typed languages
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = 0 })
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = 0 })
-  vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_next, { buffer = 0 })
-  vim.keymap.set('n', '<leader>eN', vim.diagnostic.goto_prev, { buffer = 0 })
-  vim.keymap.set('n', '<leader>el', ':Telescope diagnostics', { buffer = 0 }) --Lists all errors and lets you navigate the list with telescope
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = 0 }) --Lets you do stuff automatically like importing sth or organizing imports
+local create_lsp_bindings = function(bufnr)
+  local bufopts = function(desc)
+    return { noremap = true, silent = true, buffer = bufnr, desc = desc }
+  end
+  vim.keymap.set('n', 'F', vim.lsp.buf.hover, bufopts('Hover documentation'))
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts('[G]o to [D]efinition'))
+  vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, bufopts('[G]o to [T]ype definition')) -- This one is more for statically typed languages
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts('[G]o to [I]mplementation'))
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts('[R]e[N]ame'))
+  vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_next, bufopts('[E]rror [n]ext'))
+  vim.keymap.set('n', '<leader>eN', vim.diagnostic.goto_prev, bufopts('[E]rror previous (shift-n)'))
+  vim.keymap.set('n', '<leader>el', ':Telescope diagnostics<CR>', bufopts('[E]rror [List]')) --Lists all errors and lets you navigate the list with telescope
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts('[C]ode [A]ctions')) --Lets you do stuff automatically like importing sth or organizing imports
 end
 
+require('nvim-lsp-installer').setup {}
+
+-- This inserts a '(' after you select function or method item
+require('nvim-autopairs').setup {}
+
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
+
 local set_lsp_formatting = function(client, bufnr)
-  -- if client.name == 'tsserver' then
-  --   client.resolved_capabilities.document_formatting = false
-  --   vim.api.nvim_create_autocmd('BufWritePre', {
-  --     group = vim.api.nvim_create_augroup('Format', { clear = true }),
-  --     buffer = bufnr,
-  --     callback = function() vim.lsp.buf.format() end
-  --   })
-  -- end
   if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = vim.api.nvim_create_augroup('Format', { clear = true }),
       buffer = bufnr,
       callback = function()
-        vim.lsp.buf.format({ timeout_ms = 2000 })
+        vim.lsp.buf.format({ timeout_ms = 3000 })
         print('Format applied')
       end
     })
   end
 end
 
-require('null-ls').setup({
-  sources = {
-    require('null-ls').builtins.formatting.prettier,
-    require('null-ls').builtins.formatting.eslint,
-  }
-})
+local null_ls = require("null-ls")
+local code_actions = null_ls.builtins.code_actions
+local formatting = null_ls.builtins.formatting
+local sources = {
+  formatting.prettier,
+  code_actions.eslint,
+  code_actions.eslint_d
+}
+
+null_ls.setup({ sources = sources })
 
 -- PYTHON
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -224,7 +251,7 @@ require('lspconfig').pyright.setup {
   capabilities = capabilities,
   on_attach = function(client, bufnr)
     print('pyright LSP attached')
-    create_lsp_bindings()
+    create_lsp_bindings(bufnr)
     set_lsp_formatting(client, bufnr)
   end,
 }
@@ -236,7 +263,7 @@ require('lspconfig').tsserver.setup {
   cmd = { 'typescript-language-server', '--stdio' },
   on_attach = function(client, bufnr)
     print('Typescript LSP attached')
-    create_lsp_bindings()
+    create_lsp_bindings(bufnr)
     set_lsp_formatting(client, bufnr)
   end,
 }
@@ -246,16 +273,22 @@ require('lspconfig').sumneko_lua.setup {
   capabilities = capabilities,
   on_attach = function(client, bufnr)
     print('LUA LSP attached')
-    create_lsp_bindings()
+    create_lsp_bindings(bufnr)
     set_lsp_formatting(client, bufnr)
   end,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { 'vim' }
+      }
+    }
+  }
 }
 
 
 -- Configure nvim-cmp to work with lsp for autocompletion
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-local cmp = require('cmp')
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -269,7 +302,7 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-w>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
@@ -296,14 +329,65 @@ require 'nvim-treesitter.configs'.setup {
   -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
   highlight = {
     enable = true, -- false will disable the whole extension
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
   },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = 'gnn', -- [G]rab [N]ext [N]ode
+      node_incremental = 'grn', -- [GR] [N]ext node
+      scope_incremental = 'grc', -- [GR]rab [C]ontext
+      node_decremental = 'grm', -- [G]rab [R]e[M]ove node
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ['aa'] = '@parameter.outer',
+        ['ia'] = '@parameter.inner',
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+      },
+    },
+    move = {
+      enable = true,
+      set_jump = true,
+      goto_next_start = {
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
+      },
+      goto_next_end = {
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
+      },
+      goto_previous_end = {
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ['<leader>a'] = '@parameter.inner',
+      },
+      swap_previous = {
+        ['<leader>A'] = '@parameter.inner',
+      },
+    },
+  },
+  additional_vim_regex_highlighting = false,
 }
+
+-- Setup Comment.nvim
+require('Comment').setup()
 
 -- Go to file, if it doesnt exist create it
 vim.keymap.set('', 'gf', ':edit <cfile><CR>')
@@ -313,7 +397,7 @@ vim.keymap.set('n', '<leader>l', ':bnext<CR>', { silent = true })
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { silent = true })
 vim.keymap.set('n', '<leader>Q', ':bdelete!<CR>', { silent = true })
 
--- Save all with Ctrl+s
+-- Save all with Space+s
 vim.keymap.set('n', '<C-s>', ':wa<CR>')
 vim.keymap.set('i', '<C-s>', '<Esc>:wa<CR>')
 
@@ -323,11 +407,17 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>')
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>')
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>')
 
--- Resize splits with Alt+h,j,k,l
+-- Resize splits with Alt+h,j,k,l [Normal Mode]
 vim.keymap.set('n', '<M-h>', '<C-w><lt>')
 vim.keymap.set('n', '<M-j>', '<C-w>-')
 vim.keymap.set('n', '<M-k>', '<C-w>+')
 vim.keymap.set('n', '<M-l>', '<C-w>>')
+
+-- Move around with Alt+h,j,k,l [Insert Mode]
+vim.keymap.set('i', '<M-h>', '<left>')
+vim.keymap.set('i', '<M-j>', '<down>')
+vim.keymap.set('i', '<M-k>', '<up>')
+vim.keymap.set('i', '<M-l>', '<right>')
 
 --Nvimtree configuration
 -- disable netrw at the very start of your init.lua (strongly advised)
@@ -361,10 +451,13 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
 -- Open Telescope and search git tree files with Space fg
-vim.keymap.set('n', '<leader>fg', builtin.git_files)
+vim.keymap.set('n', '<leader>fgf', builtin.git_files)
 
 -- Open Telescope and find files in home directory with Space ff
 vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files cwd=~/<CR>')
+
+-- Open Telescope and find branches with Space fv
+vim.keymap.set('n', '<leader>fgb', '<cmd>Telescope git_branches<CR>')
 
 -- Open Telescope and search lines inside the current buffer with Space fl
 vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
@@ -378,6 +471,8 @@ vim.keymap.set('n', '<leader>fL', builtin.live_grep)
 --Search history with Space fh
 vim.keymap.set('n', '<leader>fh', builtin.oldfiles)
 
+-- Search for references of the word under the cursor with Space fr
+vim.keymap.set('n', '<leader>fr', builtin.lsp_references)
 
 vim.g.vimspector_base_dir = '/home/julian/.config/nvim/plugged/vimspector'
 vim.keymap.set('n', '<leader>da', ':call vimspector#Launch()<CR>')
