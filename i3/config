@@ -130,16 +130,16 @@ set $ws10 "10"
 assign [class="firefox"] $ws1
 for_window [class='Spotify'] move to workspace 3
 assign [class="Google-chrome"] $ws4
-assign [class="teams-for-linux"] $ws5
+assign [class="microsoft teams - preview"] $ws5
 assign [class="obsidian"] $ws8
 
 # Keyboard shortcuts for applications
 bindsym Mod1+1 exec firefox
 bindsym Mod1+2 exec kitty -e tmux
-bindsym Mod1+3 exec spotify
+bindsym Mod1+3 exec spotify-launcher
 bindsym Mod1+# exec kitty -e spt
 bindsym Mod1+4 exec google-chrome-stable
-bindsym Mod1+5 exec teams-for-linux
+bindsym Mod1+5 exec teams
 bindsym Mod1+6 exec kitty -e ranger /home/julian/
 bindsym Mod1+8 exec obsidian
 
@@ -246,7 +246,11 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id $HOME/.config/i3/scripts/primdisplay.sh
 
 # Start the emacs server daemon
-exec /usr/bin/emacs --daemon
+# exec /usr/bin/emacs --daemon
 
 # Start dropbox for the obsidian synchronization
 exec --no-startup-id exec ~/.dropbox-dist/dropboxd
+
+# Start the noice cancelling chain for pipewire
+# https://medium.com/@gamunu/linux-noise-cancellation-b9f997f6764d
+exec --no-startup-id pipewire -c ~/.config/pipewire/input-filter-chain.conf
