@@ -1,0 +1,31 @@
+#!/bin/sh
+
+	ZOXIDE_RESULT=$(zoxide query -l | fzf --reverse)
+	
+	if [ -z "$ZOXIDE_RESULT" ]; then
+		exit 0
+	fi
+	
+	FOLDER=$(basename $ZOXIDE_RESULT)
+	
+	# look for the tmux session
+	SESSION=$(tmux list-sessions | grep $FOLDER | awk '{print $1}')
+	SESSION=${SESSION//:/}
+
+
+	if [ -z "$SESSION"]; then
+		# session doesn't exist, jump to directory
+		cd $ZOXIDE_RESULT
+		if [ -z "$TMUX"]; then
+			# tmux inactive, create tmux session
+			tmux new-session -s $FOLDER
+		else
+			# tmux active, create session and switch
+			tmux new-session -d -s $FOLDER
+			tmux switch-client -t $FOLDER
+		fi
+	else
+		# session exists, attach to it
+		tmux attach -t $SESSION
+	fi
+

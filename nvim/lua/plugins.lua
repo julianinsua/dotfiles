@@ -38,6 +38,11 @@ local plugins = {
 	'hrsh7th/vim-vsnip',                                           -- This is the snippet engine
 	'rafamadriz/friendly-snippets',                                -- This gives you common snippets on the go, without you having to write them yourself
 	'jose-elias-alvarez/null-ls.nvim',                             --Gives the LSP support for third party formatters like prettier
+{
+	"fildo7525/pretty_hover",
+	event = "LspAttach",
+	opts = {}
+},																															 -- Nicer hover on your lsp
 	{ 'nvim-telescope/telescope.nvim', branch = '0.1.x' },         -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
 	'nvim-lua/plenary.nvim',                                       -- This is a required dependency of telescope.
 	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, -- This allows Telescope to use the fzf algorithm
@@ -59,6 +64,8 @@ local plugins = {
 	'andymass/vim-matchup',  -- This extends the functionality of % to code elements and tags
 	{ 'glacambre/firenvim', build = function() vim.fn "firenvim#install(0)" end },
 	-- Plug('luk400/vim-jukit') --This lets you work with Jupyter notebooks and .ipynb files without leaving nvim (worked fine but had problems configuring maps in lua)
+	{'iamcco/markdown-preview.nvim', build = 'cd app && yarn install '}, -- Live preview of markdown files (assumes you jave node and yarn)
+	'shatur/neovim-session-manager' -- Remembers your buffers and other nvim stuff from your previous session
 }
 local opts = {}
 
