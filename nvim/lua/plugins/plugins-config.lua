@@ -7,4 +7,6 @@ require('plugins.nvim-treesitter-config')
 require('plugins.nvim-ts-autotag-config')
 require('plugins.telescope-config')
 require('plugins.lsp.lsp-config')
-
+require('plugins.session-manager-config')
+require('plugins.vim-markdown-config')
+require('plugins.obsidian-nvim-config')

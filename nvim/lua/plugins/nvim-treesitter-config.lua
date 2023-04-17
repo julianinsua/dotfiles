@@ -1,7 +1,7 @@
 -- Highlighting and other code parsing actions
 require 'nvim-treesitter.configs'.setup {
 	ensure_installed = "all",          -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-	ignore_install = { "sumneko_lua" }, -- list of parsers to ignore installing
+	ignore_install = { "markdown" }, -- list of parsers to ignore installing, I dont like how TS does markdown
 	highlight = {
 		enable = true,                   -- false will disable the whole extension
 	},

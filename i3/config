@@ -136,7 +136,7 @@ assign [class="obsidian"] $ws8
 # Keyboard shortcuts for applications
 bindsym Mod1+1 exec firefox
 bindsym Mod1+2 exec kitty -e tmux
-bindsym Mod1+3 exec spotify-launcher
+bindsym Mod1+3 exec spotify
 bindsym Mod1+# exec kitty -e spt
 bindsym Mod1+4 exec google-chrome-stable
 bindsym Mod1+5 exec teams

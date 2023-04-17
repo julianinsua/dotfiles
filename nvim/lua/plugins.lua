@@ -65,7 +65,9 @@ local plugins = {
 	{ 'glacambre/firenvim', build = function() vim.fn "firenvim#install(0)" end },
 	-- Plug('luk400/vim-jukit') --This lets you work with Jupyter notebooks and .ipynb files without leaving nvim (worked fine but had problems configuring maps in lua)
 	{'iamcco/markdown-preview.nvim', build = 'cd app && yarn install '}, -- Live preview of markdown files (assumes you jave node and yarn)
-	'shatur/neovim-session-manager' -- Remembers your buffers and other nvim stuff from your previous session
+	'shatur/neovim-session-manager', -- Remembers your buffers and other nvim stuff from your previous session
+	{'preservim/vim-markdown', dependencies = 'godlygeek/tabular'},
+	'epwalsh/obsidian.nvim',
 }
 local opts = {}
 

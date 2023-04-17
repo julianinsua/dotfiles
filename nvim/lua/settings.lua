@@ -22,6 +22,5 @@ vim.opt.si = true
 vim.o.undofile = true
 vim.o.updatetime = 250
 
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
