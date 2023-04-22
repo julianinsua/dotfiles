@@ -12,3 +12,20 @@ require("obsidian").setup({
       time_format = "%H:%M"
   }
 })
+
+vim.keymap.set(
+  "n",
+  "gf",
+  function()
+    if require('obsidian').util.cursor_on_markdown_link() then
+      return "<cmd>ObsidianFollowLink<CR>"
+    else
+      return "gf"
+    end
+  end,
+  { noremap = false, expr = true}
+)
+
+-- Open a note 
+vim.keymap.set("n", "<leader>o", "<cmd>Telescope find_files cwd=~/Dropbox/obsidian-vault<cr>")
+

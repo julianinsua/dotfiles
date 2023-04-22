@@ -1,9 +1,10 @@
 -- Highlighting and other code parsing actions
 require 'nvim-treesitter.configs'.setup {
 	ensure_installed = "all",          -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-	ignore_install = { "markdown" }, -- list of parsers to ignore installing, I dont like how TS does markdown
+	ignore_install = {  }, -- list of parsers to ignore installing, I dont like how TS does markdown
 	highlight = {
 		enable = true,                   -- false will disable the whole extension
+		additional_vim_regex_highlighting = true
 	},
 	incremental_selection = {
 		enable = true,
@@ -54,7 +55,7 @@ require 'nvim-treesitter.configs'.setup {
 				['<leader>a'] = '@parameter.inner',
 			},
 			swap_previous = {
-				['<leader>a'] = '@parameter.inner',
+				['<leader>A'] = '@parameter.inner',
 			},
 		},
 	},

@@ -20,7 +20,7 @@ local set_lsp_formatting = function(client, bufnr)
 			group = vim.api.nvim_create_augroup('format', { clear = true }),
 			buffer = bufnr,
 			callback = function()
-				vim.lsp.buf.format({ timeout_ms = 5000 })
+				vim.lsp.buf.format()
 				print('Code reformated by LSP')
 			end
 		})

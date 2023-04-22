@@ -7,21 +7,11 @@ cmp.event:on(
 	cmp_autopairs.on_confirm_done()
 )
 
-local null_ls = require("null-ls")
-local code_actions = null_ls.builtins.code_actions
-local formatting = null_ls.builtins.formatting
-local sources = {
-	formatting.prettier,
-	code_actions.eslint,
-	code_actions.eslint_d
-}
-
-null_ls.setup({ sources = sources })
-
 require('plugins.lsp.typescript-lsp')
 require('plugins.lsp.python-lsp')
 require('plugins.lsp.lua-lsp')
 require('plugins.lsp.markdown-lsp')
+
 -- configure nvim-cmp to work with lsp for autocompletion
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
@@ -40,11 +30,11 @@ cmp.setup {
 		['<c-f>'] = cmp.mapping.scroll_docs(4),
 		['<c-w>'] = cmp.mapping.complete(),
 		['<c-e>'] = cmp.mapping.abort(),
-		['<cr>'] = cmp.mapping.confirm({ select = false }), -- accept currently selected item. set `select` to `false` to only confirm explicitly selected items.
+		['<cr>'] = cmp.mapping.confirm({ select = true }), -- accept currently selected item. set `select` to `false` to only confirm explicitly selected items.
 	}),
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
-		{ name = 'vsnip' }, -- for vsnip users.
+		{ name = 'vsnip' }, --> for vsnip users.
 	}, {
 		{ name = 'buffer' },
 	})
@@ -53,7 +43,7 @@ cmp.setup {
 -- set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
 	sources = cmp.config.sources({
-		{ name = 'cmp_git' }, -- you can specify the `cmp_git` source if you were installed it.
+		{ name = 'cmp_git' }, -- you can specify the `cmp_git` source if you installed it.
 	}, {
 		{ name = 'buffer' },
 	})

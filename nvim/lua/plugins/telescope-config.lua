@@ -23,6 +23,26 @@ require('telescope').setup {
 
 require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
+
+-- CUSTOM COMMANDS
+-- Search the current project, else search cwd
+-- vim.api.nvim_create_user_command("command_name", callback, {opts})
+-- Find files in buffer directory
+--function() builtin.find_files({ cwd = utils.buffer_dir() }) end
+-- Find file in project (npm/yarn based, need checking)
+-- local find_in_project = function(opts)
+--   opts = opts or {}
+--   opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+--   if vim.v.shell_error ~= 0 then
+--     -- if not git then active lsp client root
+--     -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps 
+--     opts.cwd = vim.lsp.get_active_clients()[1].config.root_dir
+--   end
+--   require'telescope.builtin'.find_files(opts)
+-- end
+
+
+-- KEYBINDINGS
 -- open telescope and search git tree files with space fg
 vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = "find [g]it [f]iles" })
 
