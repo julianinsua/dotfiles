@@ -4,9 +4,9 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig').lua_ls.setup {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		print('lua lsp attached')
 		util.create_lsp_bindings(bufnr)
 		util.set_lsp_formatting(client, bufnr)
+		print('lua lsp attached')
 	end,
 	settings = {
 		Lua = {
