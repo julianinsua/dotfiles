@@ -1,4 +1,4 @@
--- go to file, if it doesnt exist create it
+-- go to file, if it doesn't exist create it
 vim.keymap.set('', 'gf', ':edit <cfile><cr>')
 
 -- Keymaps for better default experience

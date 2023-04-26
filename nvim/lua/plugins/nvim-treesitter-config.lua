@@ -1,17 +1,17 @@
 -- Highlighting and other code parsing actions
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = "all",          -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-	ignore_install = {  }, -- list of parsers to ignore installing, I dont like how TS does markdown
+	ensure_installed = "all",       -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+	ignore_install = { }, -- list of parsers to ignore installing, I dont like how TS does markdown
 	highlight = {
-		enable = true,                   -- false will disable the whole extension
+		enable = true,                -- false will disable the whole extension
 		additional_vim_regex_highlighting = true
 	},
 	incremental_selection = {
 		enable = true,
 		keymaps = {
 			init_selection = 'gri', -- [gr]ab [i]nitialize
-			node_incremental = 'grn', -- [gr] [n]ext node
-			scope_incremental = 'grc', -- [gr]rab [c]ontext
+			node_incremental = 'grn', -- [gr]ab [n]ext node
+			scope_incremental = 'grc', -- [gr]ab [c]ontext
 			node_decremental = 'grm', -- [g]rab [r]e[m]ove node
 		},
 	},

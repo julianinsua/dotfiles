@@ -24,7 +24,7 @@ local plugins = {
 	'ap/vim-css-color',                                    -- This previews hex colors on css
 	'ryanoasis/vim-devicons',                              -- This are the development icons
 	{ 'mg979/vim-visual-multi',        branch = 'master' }, -- This allows for multiple cursors
-	'sheerun/vim-polyglot',                                -- This allows higlighting for almost every language out there
+	'sheerun/vim-polyglot',                                -- This allows highlighting for almost every language out there
 	'windwp/nvim-autopairs',                               -- This allows autopais and works nice with the lsp
 	'alvan/vim-closetag',                                  -- This autocloses HTML tags
 	'tpope/vim-surround',                                  -- Allows surrounding selected text and other surrounding actions
@@ -42,26 +42,26 @@ local plugins = {
 		"fildo7525/pretty_hover",
 		event = "LspAttach",
 		opts = {}
-	},                                                                  -- Nicer hover on your lsp
-	{ 'nvim-telescope/telescope.nvim', branch = '0.1.x' },              -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
-	'nvim-lua/plenary.nvim',                                            -- This is a required dependency of telescope.
-	{ 'nvim-telescope/telescope-fzf-native.nvim',    build = 'make' },  -- This allows Telescope to use the fzf algorithm
-	'numToStr/Comment.nvim',                                            -- This allows commenting lines of code with shortcuts
-	'yggdroot/indentline',                                              -- This shows a line for each indentation
-	'puremourning/vimspector',                                          -- This is the debugger for vim
+	},                                                                     -- Nicer hover on your lsp
+	{ 'nvim-telescope/telescope.nvim', branch = '0.1.x' },                 -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
+	'nvim-lua/plenary.nvim',                                               -- This is a required dependency of telescope.
+	{ 'nvim-telescope/telescope-fzf-native.nvim',    build = 'make' },     -- This allows Telescope to use the fzf algorithm
+	'numToStr/Comment.nvim',                                               -- This allows commenting lines of code with shortcuts
+	'yggdroot/indentline',                                                 -- This shows a line for each indentation
+	'puremourning/vimspector',                                             -- This is the debugger for vim
 	{ 'nvim-treesitter/nvim-treesitter',             build = ':TSUpdate' }, -- This provides better sintax highlighting
 	{ 'nvim-treesitter/nvim-treesitter-textobjects', dependencies = "nvim-treesitter/nvim-treesitter" },
 	{
 		'prettier/vim-prettier',
 		build = 'yarn install --frozen-lockfile --production'
-	},                                                                  -- Vim plugin wrapper for prettier preconfigured with default settings
-	'windwp/nvim-ts-autotag',                                           -- Works with treesitter to autoclose tags in html, jsx, etc.
-	'andymass/vim-matchup',                                             -- This extends the functionality of % to code elements and tags
+	},                                                                     -- Vim plugin wrapper for prettier preconfigured with default settings
+	'windwp/nvim-ts-autotag',                                              -- Works with treesitter to autoclose tags in html, jsx, etc.
+	'andymass/vim-matchup',                                                -- This extends the functionality of % to code elements and tags
 	{ 'iamcco/markdown-preview.nvim', build = 'cd app && yarn install ' }, -- Live preview of markdown files (assumes you jave node and yarn)
-	'shatur/neovim-session-manager',                                    -- Remembers your buffers and other nvim stuff from your previous session
-	--	{'preservim/vim-markdown', dependencies = 'godlygeek/tabular'}, --> Going back to treesitter
-	'epwalsh/obsidian.nvim',                                            -- Suports navigationg an obsidian vault
-	{ 'glepnir/dashboard-nvim',       event = 'VimEnter' },             -- Get a visualy pleasing dashboard when starting neovim
+	'shatur/neovim-session-manager',                                       -- Remembers your buffers and other nvim stuff from your previous session
+	-- { 'preservim/vim-markdown',       dependencies = 'godlygeek/tabular' }, -- Treesitter is really bad in markdown
+	'epwalsh/obsidian.nvim',                                               -- Suports navigationg an obsidian vault
+	{ 'glepnir/dashboard-nvim', event = 'VimEnter' },                      -- Get a visualy pleasing dashboard when starting neovim
 }
 local opts = {}
 
