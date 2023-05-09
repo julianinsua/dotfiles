@@ -18,16 +18,16 @@ vim.keymap.set('n', '<leader>w', ':wa<cr>')
 vim.keymap.set('n', '<c-s>', '<esc>:wa<cr>')
 vim.keymap.set('i', '<c-s>', '<esc>:wa<cr>')
 
---create splits with space v (vertical) and space V (horizontal)
+--create splits with space v (vertical) and space V (horizontal), close them with leader q
 vim.keymap.set('n', '<leader>v', '<C-w>v')
 vim.keymap.set('n', '<leader>V', '<C-w>s')
 vim.keymap.set('n', '<leader>q', ':x<cr>')
 
--- move splits arround with Ctrl+H,J,K,L
-vim.keymap.set('n', '<leader>H', '<C-w>H', {noremap = true})
-vim.keymap.set('n', '<leader>J', '<C-w>J', {noremap = true})
-vim.keymap.set('n', '<leader>K', '<C-w>K', {noremap = true})
-vim.keymap.set('n', '<leader>L', '<C-w>L', {noremap = true})
+-- move splits around with Ctrl+H,J,K,L
+vim.keymap.set('n', '<leader>H', '<C-w>H', { noremap = true })
+vim.keymap.set('n', '<leader>J', '<C-w>J', { noremap = true })
+vim.keymap.set('n', '<leader>K', '<C-w>K', { noremap = true })
+vim.keymap.set('n', '<leader>L', '<C-w>L', { noremap = true })
 
 -- navigate splits using ctrl+h,j,k,l
 vim.keymap.set('n', '<c-j>', '<c-w><c-j>')
@@ -46,3 +46,28 @@ vim.keymap.set('i', '<m-h>', '<left>')
 vim.keymap.set('i', '<m-j>', '<down>')
 vim.keymap.set('i', '<m-k>', '<up>')
 vim.keymap.set('i', '<m-l>', '<right>')
+
+-- Proper indentation when inserting in empty lines
+vim.keymap.set('n', 'i', function()
+	if #vim.fn.getline(".") == 0 then
+		return '"_cc'
+	else
+		return 'i'
+	end
+end, { expr = true })
+vim.keymap.set('n', 'I', function()
+	if #vim.fn.getline(".") == 0 then
+		return '"_cc'
+	else
+		return 'I'
+	end
+end, { expr = true })
+
+-- Don't cut empty lines to the registry when using "dd"
+vim.keymap.set('n', 'dd', function()
+	if vim.api.nvim_get_current_line():match("^%s*$") then
+		return '"_dd'
+	else
+		return "dd"
+	end
+end, { expr = true })

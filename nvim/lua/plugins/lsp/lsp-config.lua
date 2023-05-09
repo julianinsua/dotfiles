@@ -11,6 +11,7 @@ require('plugins.lsp.typescript-lsp')
 require('plugins.lsp.python-lsp')
 require('plugins.lsp.lua-lsp')
 require('plugins.lsp.markdown-lsp')
+require('plugins.lsp.json-lsp')
 
 -- configure nvim-cmp to work with lsp for autocompletion
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -18,7 +19,7 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 cmp.setup {
 	snippet = {
 		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
+			require('luasnip').lsp_expand(args.body)
 		end,
 	},
 	window = {
@@ -34,7 +35,7 @@ cmp.setup {
 	}),
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
-		{ name = 'vsnip' }, --> for vsnip users.
+		{ name = 'luasnip', option = { show_autosnippets = true } }, --> for luasnip users.
 	}, {
 		{ name = 'buffer' },
 	})

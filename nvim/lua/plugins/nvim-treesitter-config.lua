@@ -1,9 +1,9 @@
 -- Highlighting and other code parsing actions
 require 'nvim-treesitter.configs'.setup {
-	ensure_installed = "all",       -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-	ignore_install = { }, -- list of parsers to ignore installing, I dont like how TS does markdown
+	ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+	ignore_install = {},     -- list of parsers to ignore installing, I dont like how TS does markdown
 	highlight = {
-		enable = true,                -- false will disable the whole extension
+		enable = true,         -- false will disable the whole extension
 		additional_vim_regex_highlighting = true
 	},
 	incremental_selection = {
@@ -37,7 +37,7 @@ require 'nvim-treesitter.configs'.setup {
 				[']]'] = '@class.outer',
 			},
 			goto_next_end = {
-				[']m'] = '@function.outer',
+				[']M'] = '@function.outer',
 				[']['] = '@class.outer',
 			},
 			goto_previous_start = {
@@ -45,7 +45,7 @@ require 'nvim-treesitter.configs'.setup {
 				['[['] = '@class.outer',
 			},
 			goto_previous_end = {
-				['[m'] = '@function.outer',
+				['[M'] = '@function.outer',
 				['[]'] = '@class.outer',
 			},
 		},
