@@ -41,10 +41,7 @@ local plugins = {
 
 	},                                                 -- This is the snippet engine
 	'saadparwaiz1/cmp_luasnip',                        -- This is the snippet support forn nvim-cmp
-	-- 'hrsh7th/cmp-vsnip',                              -- This is snippet support for nvim-cmp
-	-- 'hrsh7th/vim-vsnip',                              -- This is the snippet engine
-	-- 'hrsh7th/vim-vsnip-integ',												-- THis is smt related to snippets engine
-	'jose-elias-alvarez/null-ls.nvim', -- Gives the LSP support for third party formatters like prettier
+	'jose-elias-alvarez/null-ls.nvim',                 -- Gives the LSP support for third party formatters like prettier
 	{
 		"fildo7525/pretty_hover",
 		event = "LspAttach",
@@ -66,7 +63,6 @@ local plugins = {
 	'andymass/vim-matchup',                                               -- This extends the functionality of % to code elements and tags
 	{ 'iamcco/markdown-preview.nvim', build = 'cd app && yarn install ' }, -- Live preview of markdown files (assumes you have node and yarn)
 	'shatur/neovim-session-manager',                                      -- Remembers your buffers and other nvim stuff from your previous session
-	-- { 'preservim/vim-markdown',       dependencies = 'godlygeek/tabular' }, -- Treesitter is really bad in markdown
 	'epwalsh/obsidian.nvim',                                              -- Supports navigationg an obsidian vault
 	{ 'glepnir/dashboard-nvim',       event = 'VimEnter' },               -- Get a visually pleasing dashboard when starting neovim
 }

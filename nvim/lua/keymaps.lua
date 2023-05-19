@@ -47,7 +47,7 @@ vim.keymap.set('i', '<m-j>', '<down>')
 vim.keymap.set('i', '<m-k>', '<up>')
 vim.keymap.set('i', '<m-l>', '<right>')
 
--- Proper indentation when inserting in empty lines
+-- Proper indentation when editing empty lines
 vim.keymap.set('n', 'i', function()
 	if #vim.fn.getline(".") == 0 then
 		return '"_cc'
@@ -62,6 +62,20 @@ vim.keymap.set('n', 'I', function()
 		return 'I'
 	end
 end, { expr = true })
+vim.keymap.set('n', 'a', function()
+	if #vim.fn.getline(".") == 0 then
+		return '"_cc'
+	else
+		return 'a'
+	end
+end, { expr = true })
+vim.keymap.set('n', 'A', function()
+	if #vim.fn.getline(".") == 0 then
+		return '"_cc'
+	else
+		return 'A'
+	end
+end, { expr = true })
 
 -- Don't cut empty lines to the registry when using "dd"
 vim.keymap.set('n', 'dd', function()
@@ -71,3 +85,11 @@ vim.keymap.set('n', 'dd', function()
 		return "dd"
 	end
 end, { expr = true })
+
+
+-- Start from scratch
+vim.keymap.set('n', '<leader>00', function()
+	vim.cmd("%bdelete")
+	vim.cmd("G checkout main")
+	vim.cmd("G pull")
+end, { silent = true, desc="Blank slate protocol" })

@@ -7,7 +7,12 @@ require('lspconfig').marksman.setup {
 	on_attach = function(client, bufnr)
 		print('markdown lsp attached (marksman)')
 		util.create_lsp_bindings(bufnr)
+		-- Get a table of contents in MD files with Space Alt+l
+		vim.keymap.set('n', '<leader><M-l>', function()
+			vim.cmd("Toc")
+		end, { noremap = true, desc = "Display Table of contents" })
 		util.set_lsp_formatting(client, bufnr)
-		vim.keymap.set('n', 'gf', '<cmd>ObsidianFollowLink<cr>', {noremap = true, silent = true, buffer = bufnr, desc = "[G]o to Obsidian [F]ile"})
+		vim.keymap.set('n', 'gf', '<cmd>ObsidianFollowLink<cr>',
+			{ noremap = true, silent = true, buffer = bufnr, desc = "[G]o to Obsidian [F]ile" })
 	end
 }

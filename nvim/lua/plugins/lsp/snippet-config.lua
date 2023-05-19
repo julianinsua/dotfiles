@@ -32,7 +32,8 @@ ls.add_snippets('lua', {
 							pos = { row, col },
 						})
 						:type()
-
+				-- This needs more conditions from treesitter, so that the `if`
+				-- autosnippet only triggers when it makes sense
 				return not vim.tbl_contains(ignored_nodes, node_type)
 			end,
 		},
