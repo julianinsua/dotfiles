@@ -5,18 +5,20 @@ vim.keymap.set('', 'gf', ':edit <cfile><cr>')
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'",
+	{ expr = true, silent = true, desc = "Better navigation on wordwrap lines" })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'",
+	{ expr = true, silent = true, desc = "Better navigation on wordwrap lines" })
 
 -- navigate split buffers using space n,N close with space x
-vim.keymap.set('n', '<leader>n', ':bnext<cr>', { silent = true })
-vim.keymap.set('n', '<leader>N', ':bprevious<cr>', { silent = true })
-vim.keymap.set('n', '<leader>x', ':bdelete!<cr>', { silent = true, noremap = true })
+vim.keymap.set('n', '<leader>n', ':bnext<cr>', { silent = true, desc = "navigate to next split buffers" })
+vim.keymap.set('n', '<leader>N', ':bprevious<cr>', { silent = true, desc = "navigate to previous split buffers" })
+vim.keymap.set('n', '<leader>x', ':bdelete!<cr>', { silent = true, noremap = true, desc = "close current buffer" })
 
 -- save all with space+w in normal mode and Ctrl+s in insert mode
-vim.keymap.set('n', '<leader>w', ':wa<cr>')
-vim.keymap.set('n', '<c-s>', '<esc>:wa<cr>')
-vim.keymap.set('i', '<c-s>', '<esc>:wa<cr>')
+vim.keymap.set('n', '<leader>w', ':wa<cr>', { desc = "Save all" })
+vim.keymap.set('n', '<c-s>', '<esc>:wa<cr>', { desc = "Save all" })
+vim.keymap.set('i', '<c-s>', '<esc>:wa<cr>', { desc = "Save all" })
 
 --create splits with space v (vertical) and space V (horizontal), close them with leader q
 vim.keymap.set('n', '<leader>v', '<C-w>v')
@@ -40,6 +42,9 @@ vim.keymap.set('n', '<m-h>', '<c-w><lt>')
 vim.keymap.set('n', '<m-j>', '<c-w>-')
 vim.keymap.set('n', '<m-k>', '<c-w>+')
 vim.keymap.set('n', '<m-l>', '<c-w>>')
+
+-- auto resize splits with alt+= [normal mode]
+vim.keymap.set('n', '<m-=>', '<c-w>=')
 
 -- move around with alt+h,j,k,l [insert mode]
 vim.keymap.set('i', '<m-h>', '<left>')
@@ -92,4 +97,4 @@ vim.keymap.set('n', '<leader>00', function()
 	vim.cmd("%bdelete")
 	vim.cmd("G checkout main")
 	vim.cmd("G pull")
-end, { silent = true, desc="Blank slate protocol" })
+end, { silent = true, desc = "Blank slate protocol" })

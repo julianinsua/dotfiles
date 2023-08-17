@@ -254,3 +254,4 @@ exec --no-startup-id exec ~/.dropbox-dist/dropboxd
 # Start the noice cancelling chain for pipewire
 # https://medium.com/@gamunu/linux-noise-cancellation-b9f997f6764d
 exec --no-startup-id pipewire -c ~/.config/pipewire/input-filter-chain.conf
+

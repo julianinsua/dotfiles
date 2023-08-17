@@ -9,5 +9,5 @@ require('settings')
 require('plugins')
 require('keymaps')
 require('colorscheme')
-require('vimspector')  --> Will change this to nvim-dap in the future, section will be "debugger"
-
+-- require('vimspector')  --> Will change this to nvim-dap in the future, section will be "debugger"
+require('debugger')

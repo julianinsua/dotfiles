@@ -11,6 +11,7 @@ local sources = {
 	diagnostics.write_good.with({ filetypes = { "markdown" } }),
 	diagnostics.cspell.with({ filetypes = { "markdown" } }),
 	diagnostics.codespell,
+	require("typescript.extensions.null-ls.code-actions"),
 }
 
 null_ls.setup({ sources = sources })

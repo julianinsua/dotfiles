@@ -10,6 +10,7 @@ require('lspconfig').marksman.setup {
 		-- Get a table of contents in MD files with Space Alt+l
 		vim.keymap.set('n', '<leader><M-l>', function()
 			vim.cmd("Toc")
+			vim.cmd("vertical resize 50")
 		end, { noremap = true, desc = "Display Table of contents" })
 		util.set_lsp_formatting(client, bufnr)
 		vim.keymap.set('n', 'gf', '<cmd>ObsidianFollowLink<cr>',

@@ -107,10 +107,14 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
-alias vm="nvim"
+alias nv="nvim"
 alias ls="exa"
 
 export PATH=$PATH:~/.tmux/scripts
+
+# Exporting go root dir and delve to path
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin:$PATH
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

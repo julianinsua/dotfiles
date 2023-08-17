@@ -16,7 +16,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	'kassio/neoterm',                                 --Get a terminal working inside vim (not using it, investigate and decide)
 	'nvim-lualine/lualine.nvim',                      -- This is the status bar
-	'kyazdani42/nvim-web-devicons',                   -- Icons for the statusbar
 	-- 'gruvbox-community/gruvbox',                           -- This is the Gruvbox colortheme for vim
 	{ "catppuccin/nvim",        name = "catppuccin" }, -- Purple theme for neovim
 	'nvim-tree/nvim-tree.lua',                        -- This is the file navigator
@@ -36,23 +35,38 @@ local plugins = {
 	'hrsh7th/cmp-buffer',                             -- This provides autocompletion using native LSP
 	'hrsh7th/cmp-path',                               -- This provides autocompletion using native LSP
 	{
+		'nvimdev/lspsaga.nvim',
+		config = function()
+			require('lspsaga').setup({
+				ui = {
+					code_action = ''
+				}
+			})
+		end,
+		dependencies = {
+			'nvim-tree/nvim-web-devicons' -- optional
+		}
+	},
+	{
 		"L3MON4D3/LuaSnip",
 		dependencies = { "rafamadriz/friendly-snippets" }, -- This gives you common snippets on the go, without you having to write them yourself
 
 	},                                                 -- This is the snippet engine
 	'saadparwaiz1/cmp_luasnip',                        -- This is the snippet support forn nvim-cmp
 	'jose-elias-alvarez/null-ls.nvim',                 -- Gives the LSP support for third party formatters like prettier
-	{
-		"fildo7525/pretty_hover",
-		event = "LspAttach",
-		opts = {}
-	},                                                                     -- Nicer hover on your lsp
+	'jose-elias-alvarez/typescript.nvim',              -- Usefull extra stuff for typescript LSP
+	-- {
+	-- 	"fildo7525/pretty_hover",
+	-- 	event = "LspAttach",
+	-- 	opts = {}
+	-- },                                                                     -- Nicer hover on your lsp
+	'lewis6991/hover.nvim',                                                -- Better hover, extra sources for hover
 	{ 'nvim-telescope/telescope.nvim',            branch = '0.1.x' },      -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
 	'nvim-lua/plenary.nvim',                                               -- This is a required dependency of telescope.
 	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },        -- This allows Telescope to use the fzf algorithm
 	'numToStr/Comment.nvim',                                               -- This allows commenting lines of code with shortcuts
 	'yggdroot/indentline',                                                 -- This shows a line for each indentation
-	'puremourning/vimspector',                                             -- This is the debugger for vim
+	-- 'puremourning/vimspector',                                             -- This is the debugger for vim
 	{ 'nvim-treesitter/nvim-treesitter',             build = ':TSUpdate' }, -- This provides better syntax highlighting
 	{ 'nvim-treesitter/nvim-treesitter-textobjects', dependencies = "nvim-treesitter/nvim-treesitter" },
 	{
@@ -65,7 +79,27 @@ local plugins = {
 	'shatur/neovim-session-manager',                                      -- Remembers your buffers and other nvim stuff from your previous session
 	'epwalsh/obsidian.nvim',                                              -- Supports navigationg an obsidian vault
 	{ 'glepnir/dashboard-nvim',       event = 'VimEnter' },               -- Get a visually pleasing dashboard when starting neovim
+	{
+		"mfussenegger/nvim-dap",
+		lazy = true,
+		dependencies = {
+			"theHamsta/nvim-dap-virtual-text",
+			"rcarriga/nvim-dap-ui",
+			"mfussenegger/nvim-dap-python",
+			"nvim-telescope/telescope-dap.nvim",
+			"leoluz/nvim-dap-go",
+			"jbyuki/one-small-step-for-vimkind",
+			"mxsdev/nvim-dap-vscode-js",
+			{
+				"microsoft/vscode-js-debug",
+				lazy = true,
+				build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+			},
+		},
+		enable = true,
+	},
 }
+
 local opts = {}
 
 require('lazy').setup(plugins, opts)

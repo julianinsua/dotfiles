@@ -1,3 +1,5 @@
+local util = require "plugins.lsp.util"
+
 local function filter(arr, fn)
 	if type(arr) ~= "table" then
 		return arr
@@ -31,20 +33,24 @@ local function go_to_definition()
 	vim.lsp.buf.definition { on_list = on_list }
 end
 
-local create_lsp_bindings = function(bufnr)
-	local bufopts = function(desc)
-		return { noremap = true, silent = true, buffer = bufnr, desc = desc }
-	end
-	vim.keymap.set('n', 'F', vim.lsp.buf.hover, bufopts('hover documentation'))
-	vim.keymap.set('n', 'gd', go_to_definition, bufopts('[g]o to [d]efinition'))
-	vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts('[g]o to [t]ype definition')) -- this one is more for statically typed languages
-	vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts('[g]o to [i]mplementation'))
-	vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts('[r]e[n]ame'))
-	vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_next, bufopts('[e]rror [n]ext'))
-	vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_prev, bufopts('[e]rror previous (shift-n)'))
-	vim.keymap.set('n', '<leader>el', '<cmd>Telescope diagnostics<cr>', bufopts('[e]rror [list]')) --lists all errors and lets you navigate the list with telescope
-	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts('[c]ode [a]ctions'))       --lets you do stuff automatically like importing sth or organizing imports
-end
+-- local create_lsp_bindings = function(bufnr)
+-- 	local bufopts = function(desc)
+-- 		return { noremap = true, silent = true, buffer = bufnr, desc = desc }
+-- 	end
+-- 	vim.keymap.set('n', 'F', "<cmd>Lspsaga hover_doc<cr>", bufopts('hover documentation'))
+-- 	vim.keymap.set('n', 'K', "<cmd>Lspsaga hover_doc ++keep<cr>", bufopts('hover documentation'))
+-- 	-- vim.keymap.set('n', 'gd', go_to_definition, bufopts('[g]o to [d]efinition'))
+-- 	vim.keymap.set('n', 'gd', '<cmd>Lspsaga goto_definition<cr>', bufopts('[g]o to [d]efinition'))
+-- 	vim.keymap.set('n', '<leader>gd', '<cmd>Lspsaga peek_definition<cr>', bufopts('[g]o to [d]efinition'))
+-- 	vim.keymap.set('n', 'gt', '<cmd>Lspsaga goto_type_definition<cr>', bufopts('[g]o to [t]ype definition')) -- this one is more for statically typed languages
+-- 	vim.keymap.set('n', '<leader>gt', '<cmd>Lspsaga peek_type_definition<cr>', bufopts('[g]o to [d]efinition'))
+-- 	vim.keymap.set('n', 'gi', '<cmd>Lspsaga finder<cr>', bufopts('[g]o to [i]mplementation'))
+-- 	vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<cr>', bufopts('[r]e[n]ame'))
+-- 	vim.keymap.set('n', '<leader>en', '<cmd>Lspsaga diagnostic_jump_next<cr>', bufopts('[e]rror [n]ext'))
+-- 	vim.keymap.set('n', '<leader>en', '<cmd>Lspsaga diagnostic_jump_prev<cr>', bufopts('[e]rror previous (shift-n)'))
+-- 	vim.keymap.set('n', '<leader>el', '<cmd>Telescope diagnostics<cr>', bufopts('[e]rror [list]')) --lists all errors and lets you navigate the list with telescope
+-- 	vim.keymap.set('n', '<leader>ca', "<cmd>Lspsaga code_action<cr>", bufopts('[c]ode [a]ctions')) --lets you do stuff automatically like importing sth or organizing imports
+-- end
 
 
 local function lsp_formatting(bufnr)
@@ -81,14 +87,60 @@ end
 
 -- typescript
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require('lspconfig').tsserver.setup {
-	capabilities = capabilities,
-	filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact', 'javascript.jsx' },
-	cmd = { 'typescript-language-server', '--stdio' },
-	on_attach = function(client, bufnr)
-		print('typescript lsp attached')
-		create_lsp_bindings(bufnr)
-		lsp_formatting(bufnr)
-		vim.keymap.set('i', '=', add_curly_braces, { expr = true, buffer = true })
-	end,
-}
+-- VANILLA LSP CONFIG
+-- require('lspconfig').tsserver.setup {
+-- 	capabilities = capabilities,
+-- 	filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact', 'javascript.jsx' },
+-- 	cmd = { 'typescript-language-server', '--stdio' },
+-- 	on_attach = function(client, bufnr)
+-- 		print('typescript lsp attached')
+-- 		create_lsp_bindings(bufnr)
+-- 		lsp_formatting(bufnr)
+-- 		vim.keymap.set('i', '=', add_curly_braces, { expr = true, buffer = true })
+-- 	end,
+-- }
+
+-- TYPESCRIPT.NVIM CONFIG
+require("typescript").setup({
+	disable_commands = false, -- prevent the plugin from creating Vim commands
+	debug = false,           -- enable debug logging for commands
+	go_to_source_definition = {
+		fallback = true,       -- fall back to standard LSP definition on failure
+	},
+	server = {               -- pass options to lspconfig's setup method
+		capabilities = capabilities,
+		filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact', 'javascript.jsx' },
+		cmd = { 'typescript-language-server', '--stdio' },
+		on_attach = function(client, bufnr)
+			print('typescript lsp attached')
+			util.create_lsp_bindings(bufnr)
+			lsp_formatting(bufnr)
+			vim.keymap.set('i', '=', add_curly_braces, { expr = true, buffer = true })
+		end,
+		settings = {
+			-- specify some or all of the following settings if you want to adjust the default behavior
+			javascript = {
+				inlayHints = {
+					includeInlayEnumMemberValueHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+					includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayVariableTypeHints = true,
+				},
+			},
+			typescript = {
+				inlayHints = {
+					includeInlayEnumMemberValueHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+					includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayVariableTypeHints = true,
+				},
+			},
+		},
+	},
+})

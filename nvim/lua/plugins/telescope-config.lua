@@ -1,3 +1,6 @@
+local action_state = require('telescope.actions.state')
+local actions = require('telescope.actions')
+
 -- telescope configuration
 require('telescope').setup {
 	defaults = {
@@ -12,9 +15,19 @@ require('telescope').setup {
 					vim.cmd(string.format("silent lcd %s", dir))
 				end,
 				["dd"] = function(prompt_bufnr)
-					local selection = require("telescope.actions.state").get_selected_entry()
-					require("telescope.actions").close(prompt_bufnr)
-					vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+					local current_picker = action_state.get_current_picker(prompt_bufnr)
+					local multi_selections = current_picker:get_multi_selection()
+
+					if next(multi_selections) == nil then
+						local selection = action_state.get_selected_entry()
+						actions.close(prompt_bufnr)
+						vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+					else
+						actions.close(prompt_bufnr)
+						for _, selection in ipairs(multi_selections) do
+							vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+						end
+					end
 				end
 			}
 		}
@@ -23,24 +36,6 @@ require('telescope').setup {
 
 require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
-
--- CUSTOM COMMANDS
--- Search the current project, else search cwd
--- vim.api.nvim_create_user_command("command_name", callback, {opts})
--- Find files in buffer directory
---function() builtin.find_files({ cwd = utils.buffer_dir() }) end
--- Find file in project (npm/yarn based, need checking)
--- local find_in_project = function(opts)
---   opts = opts or {}
---   opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
---   if vim.v.shell_error ~= 0 then
---     -- if not git then active lsp client root
---     -- will get the configured root directory of the first attached lsp. You will have problems if you are using multiple lsps 
---     opts.cwd = vim.lsp.get_active_clients()[1].config.root_dir
---   end
---   require'telescope.builtin'.find_files(opts)
--- end
-
 
 -- KEYBINDINGS
 -- open telescope and search git tree files with space fg
@@ -66,3 +61,31 @@ vim.keymap.set('n', '<leader>h', builtin.oldfiles, { desc = "find in [h]istory" 
 
 -- search for references of the word under the cursor with space fr
 vim.keymap.set('n', '<leader>r', builtin.lsp_references, { desc = "find all [r]eferences" })
+
+-- ACTIONS
+-- local action_state = require('telescope.actions.state')
+-- local actions = require('telescope.actions')
+--
+-- builtin.buffers(require('telescope.themes').get_dropdown({
+-- 	attach_mappings = function(prompt_bufnr, map)
+-- 		local delete_buffer = function()
+-- 			local current_picker = action_state.get_current_picker(prompt_bufnr)
+-- 			local multi_selections = current_picker:get_multi_selection()
+--
+-- 			if next(multi_selections) == nil then
+-- 				local selection = action_state.get_selected_entry()
+-- 				actions.close(prompt_bufnr)
+-- 				vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+-- 			else
+-- 				print("multi")
+-- 				actions.close(prompt_bufnr)
+-- 				for _, selection in ipairs(multi_selections) do
+-- 					vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+-- 				end
+-- 			end
+-- 		end
+--
+-- 		map('n', 'dd', delete_buffer)
+-- 		return true
+-- 	end
+-- }))

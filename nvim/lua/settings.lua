@@ -21,6 +21,8 @@ vim.opt.ai = true
 vim.opt.si = true
 vim.o.undofile = true
 vim.o.updatetime = 250
+vim.o.redrawtime = 500
+
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
