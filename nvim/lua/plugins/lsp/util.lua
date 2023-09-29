@@ -1,3 +1,15 @@
+local changeFilenameLSP = function()
+	local position_params = vim.lsp.util.make_position_params()
+	local new_name = vim.fn.input("New name for file: ")
+
+	position_params.newName = new_name
+
+	print(vim.inspect(position_params.textDocument.uri))
+	-- this renames the file, but doesn't change the import statement
+	vim.lsp.util.rename("/home/julian/dotfiles/nvim/lua/scratch/scratch.lua",
+		"/home/julian/dotfiles/nvim/lua/scratch/scratch2.lua")
+end
+
 -- lsp configurations for different languages
 local create_lsp_bindings = function(bufnr)
 	local bufopts = function(desc)
@@ -16,6 +28,7 @@ local create_lsp_bindings = function(bufnr)
 	vim.keymap.set('n', '<leader>eN', '<cmd>Lspsaga diagnostic_jump_prev<cr>', bufopts('[e]rror previous (shift-n)'))
 	vim.keymap.set('n', '<leader>el', '<cmd>Telescope diagnostics<cr>', bufopts('[e]rror [list]')) --lists all errors and lets you navigate the list with telescope
 	vim.keymap.set('n', '<leader>ca', "<cmd>Lspsaga code_action<cr>", bufopts('[c]ode [a]ctions')) --lets you do stuff automatically like importing sth or organizing imports
+	vim.api.nvim_create_user_command('MyRename', changeFilenameLSP, {})
 end
 
 local set_lsp_formatting = function(client, bufnr)

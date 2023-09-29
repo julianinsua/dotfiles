@@ -44,10 +44,12 @@
   "vim-css-color": { "branch": "master", "commit": "6cc65734bc7105d9677ca54e2255fcbc953ba6bf" },
   "vim-devicons": { "branch": "master", "commit": "71f239af28b7214eebb60d4ea5bd040291fb7e33" },
   "vim-fugitive": { "branch": "master", "commit": "b3b838d690f315a503ec4af8c634bdff3b200aaf" },
+  "vim-go": { "branch": "master", "commit": "ec8f05bb24eb8324253b97f75d99114ad6565231" },
   "vim-matchup": { "branch": "master", "commit": "582cbc8c2dc311deb7a03f7d505d52544c36d4b6" },
   "vim-polyglot": { "branch": "master", "commit": "bc8a81d3592dab86334f27d1d43c080ebf680d42" },
   "vim-prettier": { "branch": "master", "commit": "5e6cca21e12587c02e32a06bf423519eb1e9f1b2" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
   "vim-visual-multi": { "branch": "master", "commit": "724bd53adfbaf32e129b001658b45d4c5c29ca1a" },
-  "vscode-js-debug": { "branch": "main", "commit": "df0247e2df0dc816e0b2b8a38a37867673a75815" }
+  "vscode-js-debug": { "branch": "main", "commit": "df0247e2df0dc816e0b2b8a38a37867673a75815" },
+  "zen-mode.nvim": { "branch": "main", "commit": "68f554702de63f4b7b6b6d4bcb10178f41a0acc7" }
 }

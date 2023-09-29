@@ -1,0 +1,27 @@
+{
+	"React component with prop types, default props and tss-react styles": {
+		"prefix": ["rftss"],
+		"body": [
+			"import PropTypes from \"prop-types\";",
+			"import { makeStyles } from \"tss-react/mui\";",
+			"",
+			"const useStyles = makeStyles()((theme, props) => ({}))",
+			"",
+			"const ${TM_FILENAME_BASE} = ({}) => {",
+			"\tconst {classes} = useStyles() ",
+			"\treturn (",
+			"\t\t<div>",
+			"\t\t\t$0",
+			"\t\t</div>",
+			"\t)",
+			"}",
+			"",
+			"${TM_FILENAME_BASE}.propTypes = {}",
+			"",
+			"${TM_FILENAME_BASE}.defaultProps = {}",
+			"",
+			"export default ${TM_FILENAME_BASE}"
+		],
+		"description": "React functional component with prop types and default props and tss-react styles"
+	}
+}

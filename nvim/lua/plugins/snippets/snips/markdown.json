@@ -1,0 +1,14 @@
+{
+	"FrontMatter": {
+		"prefix": ["fm"],
+		"description": "Insert the default frontmatter elements that I use on my notes",
+		"body": [
+			"Comment: \"New Note\"",
+			"Created: \"$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE\"",
+			"Materials: \"\"",
+			"Review: \"Yes\"",
+			"Subject: \"\"",
+			"Type: \"Article | Course\""
+		]
+	}
+}

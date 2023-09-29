@@ -7,6 +7,9 @@ ls.config.set_config({
 -- Enable VS Code like snippets (friendly-snippets)
 require("luasnip.loaders.from_vscode").lazy_load()
 
+-- Custom snippets
+require("luasnip.loaders.from_vscode").load({paths = {'./lua/plugins/snippets/snips/'}})
+
 -- Get react snippets on .js files
 ls.filetype_extend("javascript", { "javascriptreact" })
 

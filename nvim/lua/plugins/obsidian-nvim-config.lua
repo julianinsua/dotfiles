@@ -3,14 +3,15 @@ require("obsidian").setup({
   completion = {
     nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
   },
-	daily_notes = {
+  daily_notes = {
     folder = "Daily",
   },
-	templates = {
-      subdir = "Templates",
-      date_format = "%Y-%m-%d-%a",
-      time_format = "%H:%M"
-  }
+  templates = {
+    subdir = "Templates",
+    date_format = "%Y-%m-%d-%a",
+    time_format = "%H:%M"
+  },
+  mappings = {}
 })
 
 vim.keymap.set(
@@ -23,9 +24,8 @@ vim.keymap.set(
       return "gf"
     end
   end,
-  { noremap = false, expr = true}
+  { noremap = false, expr = true }
 )
 
--- Open a note 
+-- Open a note
 vim.keymap.set("n", "<leader>o", "<cmd>Telescope find_files cwd=~/Dropbox/obsidian-vault<cr>")
-

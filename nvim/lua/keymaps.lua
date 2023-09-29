@@ -1,5 +1,5 @@
 -- go to file, if it doesn't exist create it
-vim.keymap.set('', 'gf', ':edit <cfile><cr>')
+-- vim.keymap.set('', 'gf', ':edit <cfile><cr>')
 
 -- Keymaps for better default experience
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })

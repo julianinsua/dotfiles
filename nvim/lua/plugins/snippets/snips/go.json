@@ -1,0 +1,7 @@
+{
+	"If error": {
+		"prefix": ["eif", "iferr"],
+		"description": "Error handling conditional",
+		"body": ["if err != nil {", "\t$0", "}"]
+	}
+}

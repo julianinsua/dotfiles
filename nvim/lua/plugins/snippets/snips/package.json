@@ -1,0 +1,27 @@
+{
+	"name": "custom-snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": ["go"],
+				"path": "./snips/go.json"
+			},
+			{
+				"language": ["go"],
+				"path": "./go.json"
+			},
+			{
+				"language": ["javascript", "javascriptreact"],
+				"path": "./snips/javascript.json"
+			},
+			{
+				"language": ["javascript", "javascriptreact"],
+				"path": "./javascript.json"
+			},
+			{
+				"language": ["markdown"],
+				"path": "./markdown.json"
+			}
+		]
+	}
+}
