@@ -114,6 +114,9 @@ require("typescript").setup({
 		on_attach = function(client, bufnr)
 			print('typescript lsp attached')
 			util.create_lsp_bindings(bufnr)
+			vim.keymap.set('n', '<leader><M-l>', "<cmd>Lspsaga outline<cr>",
+				{ noremap = true, silent = false, buffer = bufnr, desc = 'Show file out[L]ine' })
+			-- Show an outline of the methods and symbols of the document
 			lsp_formatting(bufnr)
 			vim.keymap.set('i', '=', add_curly_braces, { expr = true, buffer = true })
 		end,

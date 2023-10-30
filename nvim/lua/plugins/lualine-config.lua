@@ -1,20 +1,26 @@
+local catpuccin = require('plugins.lualine-theme')
 -- function to return the total number of lines in a buffer in lualine
 local totalLineNumber = function()
-	return " " .. vim.fn.line('.') .. ' / ' .. vim.fn.line('$') .. " 並"
+	return " 並" .. vim.fn.line('.') .. ' / ' .. vim.fn.line('$')
+	-- " " " 並"
 end
 
 local currentBufferPath = function()
-	return vim.fn.expand('%')
+	return vim.fn.expand("%:~:.")
+	-- return vim.fn.expand('%')
 end
 
 require('lualine').setup {
 	options = {
 		icons_enabled = true,
 		-- theme = 'gruvbox-material',
-		theme = 'material',
+		-- theme = 'material',
+		-- theme = 'codedark',
+		theme = catpuccin,
 		-- component_separators = { left = '', right = '' },
-		component_separators = { left = ' ', right = ' ' },
-		section_separators = { left = '', right = '' },
+		component_separators = { left = ' ', right = '' },
+		-- section_separators = { left = '', right = '' },
+		section_separators = { left = '', right = '' },
 		disabled_filetypes = {
 			statusline = { 'NVimTree' },
 			tabline = { 'NVimTree' },
@@ -37,7 +43,7 @@ require('lualine').setup {
 		lualine_c = { currentBufferPath },
 		-- lualine_x = { 'encoding', 'fileformat', 'filetype' },
 		lualine_x = { 'filetype' },
-		lualine_y = { 'progress', totalLineNumber },
+		lualine_y = { totalLineNumber },
 		lualine_z = { 'location' }
 	},
 	inactive_sections = {

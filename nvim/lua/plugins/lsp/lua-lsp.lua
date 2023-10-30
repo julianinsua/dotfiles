@@ -5,6 +5,9 @@ require('lspconfig').lua_ls.setup {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		util.create_lsp_bindings(bufnr)
+
+		vim.keymap.set('n', '<leader><M-l>', "<cmd>Lspsaga outline<cr>",
+			{ noremap = true, silent = false, buffer = bufnr, desc = 'Show file out[L]ine' })                                                              -- Show an outline of the methods and symbols of the document
 		util.set_lsp_formatting(client, bufnr)
 		print('lua lsp attached')
 	end,

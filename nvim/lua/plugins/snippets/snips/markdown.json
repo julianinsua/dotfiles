@@ -1,12 +1,12 @@
 {
 	"FrontMatter": {
 		"prefix": ["fm"],
-		"description": "Insert the default frontmatter elements that I use on my notes",
+		"description": "Insert the default frontmatter elements that I use on my notes in YAML",
 		"body": [
 			"Comment: \"New Note\"",
 			"Created: \"$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE\"",
-			"Materials: \"\"",
-			"Review: \"Yes\"",
+			"Materials: \"url\"",
+			"Review: \"Yes | No\"",
 			"Subject: \"\"",
 			"Type: \"Article | Course\""
 		]

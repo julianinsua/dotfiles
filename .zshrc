@@ -110,7 +110,11 @@ alias vim="nvim"
 alias nv="nvim"
 alias ls="exa"
 
-export PATH=$PATH:~/.tmux/scripts
+#export PATH=$PATH:~/.tmux/scripts
+# ~/.tmux/plugins
+export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
+# ~/.config/tmux/plugins
+export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
 
 # Exporting go root dir and delve to path
 export GOPATH=$HOME/go

@@ -26,8 +26,8 @@ local create_lsp_bindings = function(bufnr)
 	vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<cr>', bufopts('[r]e[n]ame'))
 	vim.keymap.set('n', '<leader>en', '<cmd>Lspsaga diagnostic_jump_next<cr>', bufopts('[e]rror [n]ext'))
 	vim.keymap.set('n', '<leader>eN', '<cmd>Lspsaga diagnostic_jump_prev<cr>', bufopts('[e]rror previous (shift-n)'))
-	vim.keymap.set('n', '<leader>el', '<cmd>Telescope diagnostics<cr>', bufopts('[e]rror [list]')) --lists all errors and lets you navigate the list with telescope
-	vim.keymap.set('n', '<leader>ca', "<cmd>Lspsaga code_action<cr>", bufopts('[c]ode [a]ctions')) --lets you do stuff automatically like importing sth or organizing imports
+	vim.keymap.set('n', '<leader>el', '<cmd>Telescope diagnostics<cr>', bufopts('[e]rror [list]'))  --lists all errors and lets you navigate the list with telescope
+	vim.keymap.set('n', '<leader>ca', "<cmd>Lspsaga code_action<cr>", bufopts('[c]ode [a]ctions'))  --lets you do stuff automatically like importing sth or organizing imports
 	vim.api.nvim_create_user_command('MyRename', changeFilenameLSP, {})
 end
 
