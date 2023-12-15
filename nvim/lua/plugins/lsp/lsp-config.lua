@@ -10,3 +10,4 @@ require('plugins.lsp.go-lsp')
 require('plugins.lsp.sqlls-config')
 
 require('plugins.lsp.cmp-config')
+require('plugins.lsp.formatting-config')

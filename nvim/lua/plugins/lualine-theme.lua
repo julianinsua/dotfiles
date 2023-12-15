@@ -32,7 +32,7 @@ return {
   normal = {
     a = { bg = catpuccin.surface1, fg = catpuccin.mauve, gui = 'bold' },
     b = { bg = catpuccin.surface0, fg = catpuccin.subtext0 },
-    c = { bg = catpuccin.base, fg = catpuccin.text },
+    c = { bg = catpuccin.base, fg = catpuccin.text, gui = 'italic' },
     z = { bg = catpuccin.lavender, fg = catpuccin.base, gui = 'bold' }
   },
   insert = {
@@ -60,9 +60,9 @@ return {
     z = { bg = catpuccin.teal, fg = catpuccin.base, gui = 'bold' }
   },
   inactive = {
-    a = { bg = catpuccin.base, fg = catpuccin.subtext0, gui = 'bold' },
-    b = { bg = catpuccin.base, fg = catpuccin.subtext0 },
-    c = { bg = catpuccin.base, fg = catpuccin.subtext0 },
-    x = { bg = catpuccin.base, fg = catpuccin.subtext0, gui = 'bold' }
+    a = { bg = catpuccin.base, fg = catpuccin.subtext0 },
+    b = { bg = catpuccin.base, fg = catpuccin.overlay2 },
+    c = { bg = catpuccin.base, fg = catpuccin.overlay2 },
+    y = { bg = catpuccin.surface0, fg = catpuccin.subtext0, gui = 'italic' }
   }
 }

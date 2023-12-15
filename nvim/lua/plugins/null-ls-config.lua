@@ -4,14 +4,13 @@ local formatting = null_ls.builtins.formatting     --> Make stuff look pretty
 local diagnostics = null_ls.builtins.diagnostics   --> Shows errors
 
 local sources = {
-	-- formatting.prettier,
+	formatting.prettier,
 	code_actions.eslint_d,
 	code_actions.cspell.with({ filetypes = { "markdown" } }),
 	diagnostics.eslint_d,
 	diagnostics.write_good.with({ filetypes = { "markdown" } }),
 	diagnostics.cspell.with({ filetypes = { "markdown" } }),
 	diagnostics.codespell,
-	require("typescript.extensions.null-ls.code-actions"),
 }
 
 null_ls.setup({ sources = sources })

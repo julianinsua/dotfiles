@@ -1,7 +1,7 @@
-local catpuccin = require('plugins.lualine-theme')
+local catpuccin = require("plugins.lualine-theme")
 -- function to return the total number of lines in a buffer in lualine
 local totalLineNumber = function()
-	return " 並" .. vim.fn.line('.') .. ' / ' .. vim.fn.line('$')
+	return " 並" .. vim.fn.line(".") .. " / " .. vim.fn.line("$")
 	-- " " " 並"
 end
 
@@ -10,7 +10,7 @@ local currentBufferPath = function()
 	-- return vim.fn.expand('%')
 end
 
-require('lualine').setup {
+require("lualine").setup({
 	options = {
 		icons_enabled = true,
 		-- theme = 'gruvbox-material',
@@ -18,12 +18,12 @@ require('lualine').setup {
 		-- theme = 'codedark',
 		theme = catpuccin,
 		-- component_separators = { left = '', right = '' },
-		component_separators = { left = ' ', right = '' },
+		component_separators = { left = " ", right = " " },
 		-- section_separators = { left = '', right = '' },
-		section_separators = { left = '', right = '' },
+		section_separators = { left = "", right = "" },
 		disabled_filetypes = {
-			statusline = { 'NVimTree' },
-			tabline = { 'NVimTree' },
+			statusline = { "NvimTree" },
+			tabline = { "NvimTree" },
 			winbar = {},
 		},
 		ignore_focus = {},
@@ -33,36 +33,36 @@ require('lualine').setup {
 			statusline = 1000,
 			tabline = 1000,
 			winbar = 1000,
-		}
+		},
 	},
 	sections = {
-		lualine_a = { 'mode' },
+		lualine_a = { "mode" },
 		-- lualine_b = { 'branch', 'diff', 'diagnostics' },
-		lualine_b = { 'branch', 'diagnostics' },
+		lualine_b = { "branch", "diagnostics" },
 		-- lualine_c = { currentbufferpath, 'filename' },
 		lualine_c = { currentBufferPath },
 		-- lualine_x = { 'encoding', 'fileformat', 'filetype' },
-		lualine_x = { 'filetype' },
+		lualine_x = { "filetype" },
 		lualine_y = { totalLineNumber },
-		lualine_z = { 'location' }
+		lualine_z = { "location" },
 	},
 	inactive_sections = {
 		lualine_a = {},
 		lualine_b = {},
 		lualine_c = { currentBufferPath },
-		lualine_x = { 'location' },
-		lualine_y = {},
-		lualine_z = {}
+		lualine_x = {},
+		lualine_y = { "location" },
+		lualine_z = {},
 	},
 	tabline = {
-		lualine_a = { 'buffers' },
+		lualine_a = { "buffers" },
 		lualine_b = {},
 		lualine_c = {},
 		lualine_x = {},
 		lualine_y = {},
-		lualine_z = { 'tabs' }
+		lualine_z = { "tabs" },
 	},
 	winbar = {},
 	inactive_winbar = {},
-	extensions = {}
-}
+	extensions = {},
+})

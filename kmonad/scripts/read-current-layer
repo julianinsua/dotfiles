@@ -1,0 +1,22 @@
+#!/bin/bash
+
+filename="/home/julian/dotfiles/kmonad/tmp/layer.txt"
+
+# Check if the file exists
+if [ -e "$filename" ]; then
+    # Read the file using input redirection
+    content=$(cat "$filename")
+    if [[ "$content" = "qwerty" ]]; then
+        echo "<span size='250%' foreground='#f9e2af'>  </span>"
+    elif [[ "$content" = "numbers" ]]; then
+        echo "<span size='250%' foreground='#94e2d5'> 󰎠 </span>"
+    elif [[ "$content" = "navigation" ]]; then
+        echo "<span size='250%' foreground='#89b4fa'> 󰠳 </span>"
+    elif [[ "$content" = "symbols" ]]; then
+        echo "<span size='250%' foreground='#f38ba8'> 󱔁 </span>"
+    else
+        echo "$content"
+    fi
+else
+    echo "File not found: $filename"
+fi
