@@ -56,11 +56,6 @@ local plugins = {
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		opts = {},
 	},
-	-- {
-	-- 	"fildo7525/pretty_hover",
-	-- 	event = "LspAttach",
-	-- 	opts = {}
-	-- },                                                                     -- Nicer hover on your lsp
 	"lewis6991/hover.nvim", -- Better hover, extra sources for hover
 	{ "nvim-telescope/telescope.nvim", branch = "0.1.x" }, -- This is a nice dialog window that can do many nice things. We CAN have nice stuff you know.
 	"nvim-lua/plenary.nvim", -- This is a required dependency of telescope.
@@ -115,6 +110,13 @@ local plugins = {
 			}
 		end,
 	}, -- linting using language specific linters
+	{
+		"antosha417/nvim-lsp-file-operations",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-tree.lua",
+		},
+	}, -- Allows file operations in code. 9ike renaimg files. It pairs with nvim-tree
 	"windwp/nvim-ts-autotag", -- Works with treesitter to autoclose tags in html, jsx, etc.
 	"andymass/vim-matchup", -- This extends the functionality of % to code elements and tags
 	{ "iamcco/markdown-preview.nvim", build = "cd app && yarn install " }, -- Live preview of markdown files (assumes you have node and yarn)
@@ -139,6 +141,11 @@ local plugins = {
 			},
 		},
 		enable = true,
+	},
+	{
+		"jackMort/ChatGPT.nvim",
+		event = "VeryLazy",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
 	},
 	{ "fatih/vim-go" },
 	{

@@ -92,9 +92,10 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
+export VISUAL='nvim'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -108,7 +109,8 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
 alias nv="nvim"
-alias ls="exa"
+alias ls="exa --classify --icons"
+alias lsa="exa --classify --icons -lha"
 
 #export PATH=$PATH:~/.tmux/scripts
 # ~/.tmux/plugins
@@ -124,7 +126,7 @@ export PATH=$PATH:$GOPATH/bin:$PATH
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /home/julian/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Setting up zoxide
 eval "$(zoxide init zsh)"

@@ -28,9 +28,9 @@
 ;; Aliases for the layer switches to report the current layer
 (defalias
   rqwe (cmd-button "./scripts/save-current-layer qwerty")
-  rnum (cmd-button "./scripts/save-current-layer numbers")
-  rnav (cmd-button "./scripts/save-current-layer navigation")
-  rsym (cmd-button "./scripts/save-current-layer symbols")
+  rnum (cmd-button "./scripts/save-current-layer numbers" "./scripts/save-current-layer qwerty")
+  rnav (cmd-button "./scripts/save-current-layer navigation" "./scripts/save-current-layer qwerty")
+  rsym (cmd-button "./scripts/save-current-layer symbols" "./scripts/save-current-layer qwerty")
 )
 
 ;; Define aliases for the base layer
@@ -42,7 +42,7 @@
   qwe   (around @rqwe (layer-switch qwerty) )         ;; switch to the qwerty layer
   nav   (around @rnav (layer-switch navigation) )     ;; switch to the navigation layer
   escl  (tap-hold-next-release 150 esc lctl)          ;; Esc and control combined
-  sspc  (tap-hold-next-release 150 spc lmet)          ;; Hold space gives you super key
+  sspc  (tap-hold-next-release 200 spc lmet)          ;; Hold space gives you super key
   qalt  (tap-hold-next-release 150 @qwe lalt)
   nval  (tap-hold-next-release 150 @nav lalt)
   tsft  (tap-hold-next-release 150 @tnum lsft)
@@ -55,16 +55,16 @@
   grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc
   tab   q     w     e     r     t     y     u     i     o     p     [     ]     \
   @escl a     s     d     f     g     h     j     k     l     ;     '     ret
-  @tsft z     x     c     v     b     n     m     ,     .     /     lalt
-  lctl  @hnav  @hnum           @sspc               bspc  rmet  cmp   rctl
+  lsft  z     x     c     v     b     n     m     ,     .     /     rsft
+  spc   @hnav  @hnum           @sspc              lalt  rmet  cmp   rctl
 )
 
 (deflayer numbers
   _     _     _     _     _     _     _     _     _     _     _     _     _     _
   @tmux !     @     #     $     %     ^     &     *     \(    \)    \_    _     _
   @escl 1     2     3     4     5     6     7     8     9     0     -    _
-  lsft  -     +     =     {     }     [     ]     _     _     _     lalt
-  _     @nav  @qwe           @sspc               bspc   _     _     _
+  lsft  ~     +     =     {     }     [     ]     bspc  del   `     _
+  _     @nav  _                @sspc              _     _     _     _
 )
 
 (deflayer navigation
@@ -72,7 +72,7 @@
   _     f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12   _
   @escl _     home  pgup  pgdn  end   left  down  up    right _     _     _
   _     mute  vold  volu  _     _     _     _     prev  pp    next  _
-  _     _     @qalt             _                 _     _     _     _ 
+  _     _     lalt              _                 _     _     _     _ 
 )
 
 #|

@@ -6,7 +6,7 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = false
 vim.opt.autoindent = true
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.ruler = true
@@ -22,7 +22,7 @@ vim.opt.si = true
 vim.o.undofile = true
 vim.o.updatetime = 250
 vim.o.redrawtime = 500
+vim.o.laststatus = 3 --> have a global statusline
 
-
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
