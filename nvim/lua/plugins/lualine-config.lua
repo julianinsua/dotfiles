@@ -1,7 +1,7 @@
 local catpuccin = require("plugins.lualine-theme")
 -- function to return the total number of lines in a buffer in lualine
 local totalLineNumber = function()
-	return " 並" .. vim.fn.line(".") .. " / " .. vim.fn.line("$")
+	return " " .. vim.fn.line(".") .. " / " .. vim.fn.line("$")
 	-- " " " 並"
 end
 
@@ -22,13 +22,13 @@ require("lualine").setup({
 		-- section_separators = { left = '', right = '' },
 		section_separators = { left = "", right = "" },
 		disabled_filetypes = {
-			statusline = { "NvimTree" },
+			statusline = {},
 			tabline = { "NvimTree" },
 			winbar = {},
 		},
 		ignore_focus = {},
 		always_divide_middle = false,
-		globalstatus = false,
+		globalstatus = true,
 		refresh = {
 			statusline = 1000,
 			tabline = 1000,
