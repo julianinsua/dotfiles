@@ -6,6 +6,8 @@ export HISTFILE=~/.zsh_history
 setopt HIST_FIND_NO_DUPS
 # following should be turned off, if sharing history via setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
+setopt autocd
+
 export BROWSER="firefox"
 if [[ -n $SSH_CONNECTION ]]; then # Preferred editor for local and remote sessions
   export EDITOR='vim'

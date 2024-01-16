@@ -23,6 +23,7 @@ vim.o.undofile = true
 vim.o.updatetime = 250
 vim.o.redrawtime = 500
 vim.o.laststatus = 3 --> have a global statusline
+vim.o.conceallevel = 1
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
