@@ -27,6 +27,7 @@ alias vim="nvim"
 alias nv="nvim"
 alias ls="exa --classify --icons"
 alias lsa="exa --classify --icons -lha"
+alias lock="swaylock"
 
 # PATH
 export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
