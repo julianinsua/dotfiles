@@ -3,7 +3,7 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 2, // Gaps between modules (4px)
+    "spacing": 8, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "hyprland/submap", "custom/spotify"],
     "modules-center": ["hyprland/window"],
@@ -13,40 +13,23 @@
         "all-outputs": true,
         "format": "{icon}",
         "format-icons": {
-            "1": "",
-            "2": "",
+            "1": " ",
+            "2": " ",
             "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
+            "4": " ",
+            "5": " ",
+            "6": " ",
             "default": "",
+            "special": "",
             "sort-by-number": true
-        }
+        },
     },
-    // "sway/workspaces": {
-    //     "disable-scroll": true,
-    //     "all-outputs": true,
-    //     "warp-on-scroll": false,
-    //     "format": "{name}: {icon}",
-    //     "format-icons": {
-    //         "1": "",
-    //         "2": "",
-    //         "3": "",
-    //         "4": "",
-    //         "5": "",
-    //         "urgent": "",
-    //         "focused": "",
-    //         "default": ""
-    //     }
-    // },
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
+    "hyprland/window": {
+        "format": "{title}",
+        "rewrite": {
+            "(.*) Mozilla Firefox": "   $1",
+            "tmux": "   tmux"
+        },
     },
     "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>",
@@ -56,8 +39,8 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": " ",
+            "deactivated": " "
         }
     },
     "tray": {
@@ -67,7 +50,7 @@
 
     "clock": {
         // "timezone": "America/New_York",
-        "format": "{: %a %d %b %y   %H:%M}",
+        "format": "{:   %a %d %b %Y     %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -137,17 +120,11 @@
         "on-click": "pavucontrol"
     },
     "custom/spotify": {
-        "format": "{icon} {}",
-        "escape": true,
+        "format": "   {}",
         "return-type": "json",
-        "max-length": 40,
-        "interval": 30, // Remove this if your script is endless and write in loop
         "on-click": "playerctl -p spotify play-pause",
-        "on-click-right": "killall spotify",
-        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
         "on-scroll-up" : "playerctl -p spotify next",
         "on-scroll-down" : "playerctl -p spotify previous",
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
-        "exec-if": "pgrep spotify"
+        "exec": "/usr/bin/python3 $HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
     },
 }
