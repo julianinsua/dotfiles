@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# WALLPAPERS PATH
+DIR=$HOME/Pictures/Wallpapers
+
+# Transition config (type swww img --help for more settings
+FPS=30
+TYPE="any"
+DURATION=3
+
+SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
+
+PICS="$(ls ${DIR} | grep -e ".jpg$" -e ".jpeg$" -e ".png$" -e ".gif$")"
+
+max=$(echo -e "$PICS" | wc -l)
+min=1
+choice=$(echo -e "$PICS" | rofi -dmenu -scroll-method 0 -terminal kitty -theme "$HOME"/.config/rofi/config/runner.rasi -p "Wallpaper or random")
+if [[ -n "$choice" ]]; then
+		option="$DIR/$choice"
+	if [[ $choice == "random" ]]; then
+		random=$(shuf -i $min-$max -n 1)
+		randomFile=$(echo -e "$PICS" | sed -n "$random{p}")
+		randomOption="$DIR/$randomFile"
+		swww img "$randomOption" $SWWW_PARAMS
+	else
+		swww img "$option" $SWWW_PARAMS
+	fi
+fi
