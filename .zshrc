@@ -28,6 +28,8 @@ alias nv="nvim"
 alias ls="exa --classify --icons"
 alias lsa="exa --classify --icons -lha"
 alias lock="swaylock"
+alias nvk='NVIM_APPNAME="nvim-kickstart" nvim'
+alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
 
 # PATH
 export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
