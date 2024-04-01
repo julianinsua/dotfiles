@@ -81,7 +81,7 @@ video () {
 }
 
 videoarea () {
-	sleep 1 && wf-recorder -g "$(slurp)" 
+	sleep 1 && wf-recorder -g "$(slurp)" -f ${dir}/${videofile}
 }
 
 if [[ ! -d "$dir" ]]; then
@@ -95,10 +95,10 @@ chosen="$(echo -e "$options" | $rofi_command -p 'Take A Shot' -dmenu -selected-r
 case $chosen in
     $screen)
 		shotnow
-        ;;
+		;;
     $area)
 		shotarea
-        ;;
+		;;
     $window)
 		shotwin
 		;;
@@ -107,9 +107,10 @@ case $chosen in
 		;;
     $inten)
 		shot10
-        ;;
+		;;
 		$video)
 		video
+		;;
 		$videoarea)
 		videoarea
 esac
