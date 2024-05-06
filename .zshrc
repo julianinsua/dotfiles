@@ -1,11 +1,19 @@
 # VARIABLES
+# Manage History
 export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
+export SAVEHIST=1000000000
 export HISTFILE=~/.zsh_history
 
-setopt HIST_FIND_NO_DUPS
+setopt EXTENDED_HISTORY # Add timestamp to history
+export HISTTIMEFORMAT="[%F %T] "
+setopt HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
+
 # following should be turned off, if sharing history via setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
+# setopt INC_APPEND_HISTORY
+
+
 setopt autocd
 
 export BROWSER="firefox"
@@ -25,8 +33,9 @@ zstyle ':completion:*' menu select
 # ALIASES
 alias vim="nvim"
 alias nv="nvim"
-alias ls="exa --classify --icons"
-alias lsa="exa --classify --icons -lha"
+alias ls="eza --color=always --classify --icons --git --no-filesize --no-time --no-user --no-permissions --long"
+alias lsa="eza --color=always --classify --icons --git -lha"
+alias cat="bat"
 alias lock="swaylock"
 alias nvk='NVIM_APPNAME="nvim-kickstart" nvim'
 alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
@@ -34,6 +43,7 @@ alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
 # PATH
 export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
 export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
+export PATH=$HOME/.tmux/plugins/tmuxifier/bin:$PATH
 
 # Exporting go root dir and delve to path
 export GOPATH=$HOME/go
@@ -44,6 +54,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.zsh/timer/timer.zsh
+source ~/.zsh/fzf-git.sh/fzf-git.sh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -53,8 +64,52 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=green,fg=black,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,bold'
 # TOOLS
 source ~/.zsh/git/git.sh
+# --> FZF
+eval "$(fzf --zsh)"
 
-# Setting up zoxide
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+# Override fzf default `find` command with the faster `fd`
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd_prefix --exclude .git"
+
+# Override the `**` on files shorthand to use `fd`
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+# Override the `**` on files shorthand to use `fd`
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
+
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --icons --color=always {} | head -200'"
+
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)             fzf --preview 'eza --tree --icons --color=always {} | head -200' "$@" ;;
+    export|unset)   fzf --preview "eval 'echo \$' {}" "$@" ;;
+    ssh)            fzf --preview 'dig {}' "$@" ;;
+    *)              fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
+  esac
+}
+
+
+# Set up bat to use catpuccin mocha theme to highlight
+export BAT_THEME="Catppuccin Mocha"
+
+# --> Tmuxifier
+eval "$(tmuxifier init -)"
+
+# --> Zoxide
 eval "$(zoxide init zsh)"
 
 PROMPT=$'%B%F{blue}  %F{#cba6f7}%~ %F{#6c7086}$(parse_git_branch) $(get_status_prompt) %b \n %F{yellow}%F{white} '
