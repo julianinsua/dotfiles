@@ -39,6 +39,7 @@ alias cat="bat"
 alias lock="swaylock"
 alias nvk='NVIM_APPNAME="nvim-kickstart" nvim'
 alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
+alias icat='kitten icat'
 
 # PATH
 export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
@@ -98,6 +99,7 @@ _fzf_comprun() {
     cd)             fzf --preview 'eza --tree --icons --color=always {} | head -200' "$@" ;;
     export|unset)   fzf --preview "eval 'echo \$' {}" "$@" ;;
     ssh)            fzf --preview 'dig {}' "$@" ;;
+    icat)           fzf --preview 'kitten icat --align left {}' "$@" ;;
     *)              fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
   esac
 }
@@ -115,4 +117,4 @@ eval "$(zoxide init zsh)"
 PROMPT=$'%B%F{blue}  %F{#cba6f7}%~ %F{#6c7086}$(parse_git_branch) $(get_status_prompt) %b \n %F{yellow}%F{white} '
 RPROMPT=''
 
-
+source /usr/share/nvm/init-nvm.sh
