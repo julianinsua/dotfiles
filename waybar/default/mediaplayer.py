@@ -26,7 +26,7 @@ def signal_handler(sig, frame):
 
 
 class PlayerManager:
-    def __init__(self, selected_player=None, excluded_player=[]):
+    def __init__(self, selected_player=None):
         self.manager = Playerctl.PlayerManager()
         self.loop = GLib.MainLoop()
         self.manager.connect(
@@ -40,14 +40,11 @@ class PlayerManager:
         signal.signal(signal.SIGTERM, signal_handler)
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
         self.selected_player = selected_player
-        self.excluded_player = excluded_player.split(",") if excluded_player else []
 
         self.init_players()
 
     def init_players(self):
         for player in self.manager.props.player_names:
-            if player.name in self.excluded_player:
-                continue
             if self.selected_player is not None and self.selected_player != player.name:
                 logger.debug(f"{player.name} is not the filtered player, skipping it")
                 continue
@@ -121,7 +118,6 @@ class PlayerManager:
         player_name = player.props.player_name
         artist = player.get_artist()
         title = player.get_title()
-        title = title.replace("&", "&amp;")
 
         track_info = ""
         if (
@@ -137,9 +133,9 @@ class PlayerManager:
 
         if track_info:
             if player.props.status == "Playing":
-                track_info = " " + track_info
+                track_info = track_info
             else:
-                track_info = " " + track_info
+                track_info = "   " + track_info
         # only print output if no other player is playing
         current_playing = self.get_first_playing_player()
         if (
@@ -154,11 +150,6 @@ class PlayerManager:
 
     def on_player_appeared(self, _, player):
         logger.info(f"Player has appeared: {player.name}")
-        if player.name in self.excluded_player:
-            logger.debug(
-                "New player appeared, but it's in exclude player list, skipping"
-            )
-            return
         if player is not None and (
             self.selected_player is None or player.name == self.selected_player
         ):
@@ -178,8 +169,6 @@ def parse_arguments():
 
     # Increase verbosity with every occurrence of -v
     parser.add_argument("-v", "--verbose", action="count", default=0)
-
-    parser.add_argument("-x", "--exclude", "- Comma-separated list of excluded player")
 
     # Define for which player we"re listening
     parser.add_argument("--player")
@@ -210,10 +199,7 @@ def main():
     logger.info("Creating player manager")
     if arguments.player:
         logger.info(f"Filtering for player: {arguments.player}")
-    if arguments.exclude:
-        logger.info(f"Exclude player {arguments.exclude}")
-
-    player = PlayerManager(arguments.player, arguments.exclude)
+    player = PlayerManager(arguments.player)
     player.run()
 
 

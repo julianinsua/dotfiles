@@ -31,7 +31,7 @@ prompt {
 
 textbox-prompt-colon {
     expand: 			            false;
-    str: 			                "󰑮";
+    str: 			                "󰸉";
     border-radius:                  100%;
     background-color:               @BG;
     text-color:                     @FG;
@@ -45,7 +45,7 @@ entry {
     placeholder-color:              @FG;
     expand:                         true;
     horizontal-align:               0;
-    placeholder:                    "Run...";
+    placeholder:                    "Search or random...";
     blink:                          true;
     border:                  		0px 0px 2px 0px;
     border-color:                  	@BDR;
@@ -78,7 +78,7 @@ listview {
     columns:                        1;
     lines:													5;
     spacing:                        4px;
-    cycle:                          true;
+    cycle:                          false;
     dynamic:                        true;
     layout:                         vertical;
 }

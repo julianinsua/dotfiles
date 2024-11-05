@@ -1,0 +1,207 @@
+{
+    "layer": "top",
+    "modules-left": [
+        "tray",
+        "group/hardware",
+        "custom/media",
+        "hyprland/submap"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "custom/updates",
+        "group/periferals",
+        "clock",
+        "battery",
+				"custom/powermenu"
+    ],
+    "pulseaudio": {
+        "tooltip": true,
+        "tooltip-format": "{icon} {desc}  {volume}%",
+        "scroll-step": 5,
+        "format": "{icon} {volume}%",
+        "format-muted": "{icon} {volume}%",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pavucontrol",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "phone-muted": "",
+            "port  able": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        }
+    },
+    "hyprland/workspaces": {
+        "all-outputs": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1": " ",
+            "2": " ",
+            "3": " ",
+            "4": " ",
+            "5": " ",
+            "6": " ",
+            "default": "",
+            "special": "",
+            "sort-by-number": true
+        }
+    },
+    "hyprland/submap": {
+        "format": "<span style=\"italic\">{}</span>",
+        "max-length": 8,
+        "tooltip": false
+    },
+    "group/periferals": {
+        "orientation": "horizontal",
+        "modules": [
+            "pulseaudio",
+            "backlight",
+						"custom/ddcutil"
+        ]
+    },
+    "group/hardware": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "cpu",
+            "memory",
+            "temperature",
+            "hyprland/language",
+        ]
+    },
+    "network": {
+        "tooltip": false,
+        "format-wifi": "  {essid}",
+        "format-ethernet": ""
+    },
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": [
+            " ",
+            " ",
+            " ",
+            " ",
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ]
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": [
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ]
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+    "clock": {
+        "format": " {:%H:%M %d/%m/%Y}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+        "interval": 15,
+        "format": " {}%",
+        "max-length": 10
+    },
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "max-length": 10
+    },
+    "hyprland/language": {
+        "format": " {}",
+        "format-en": "en",
+        "format-es": "es",
+        "keyboard-name": "at-translated-set-2-keyboard",
+        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{icon} {temperatureC}",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ]
+    },
+		"custom/media": {
+			"format": "{icon} {0}",
+			"tooltip": true,
+			"tooltip-format": "{0}",
+			"format-icons": {
+				"firefox": "<span foreground=\"#FF9500\"> </span>",
+				"spotify": "<span foreground=\"#1ED760\"> </span>",
+				"chromium": "<span foreground=\"#1A73E8\"> </span>",
+				"vlc": "<span foreground=\"#E85E00\">󰕼 </span>",
+			},
+			"escape": true,
+			"return-type": "json",
+			"max-length": 30,
+			"on-click": "playerctl play-pause",
+			"on-click-right": "playerctl stop",
+			"smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+			"on-scroll-up": "playerctl next",
+			"on-scroll-down": "playerctl previous",
+			"exec": "/usr/bin/python3 $HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in waybar/resources/custom_modules folder
+		},
+		"custom/ddcutil": {
+			"format": "{percentage}% {icon}",
+			"interval": 1,
+			"format-icons": ["󰍹", "󰷜", "󱄄"],
+			"exec": "$HOME/.config/waybar/waybar-ddcutil",
+			"on-click": "$HOME/.config/waybar/waybar-ddcutil up",
+			"on-click-right": "$HOME/.config/waybar/waybar-ddcutil down",
+			"return-type": "json"
+		},
+    "custom/launcher": {
+        "format": " ",
+        "on-click": "rofi -show drun",
+        "on-click-right": "killall rofi"
+    },
+    "custom/power": {
+        "format": " ",
+        "on-click": "bash ~/.config/rofi/leave/leave.sh"
+    },
+    "custom/updates": {
+        "format": "{}  ",
+        "exec": "checkupdates | wc -l",
+        "exec-if": "[[ $(checkupdates | wc -l) != 0 ]]",
+        "interval": 15,
+        "on-click": "kitty -e yay -Syu && notify-send 'The system has been updated' "
+    },
+    "custom/wallpaper": {
+        "format": " ",
+        "on-click": "bash ~/.config/system_scripts/pkill_bc"
+    },
+		"custom/powermenu": {
+				"format": "",
+				"on-click": "bash ~/dotfiles/rofi/bin/powermenu"
+		}
+}

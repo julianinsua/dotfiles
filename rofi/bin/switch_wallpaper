@@ -10,11 +10,11 @@ DURATION=3
 
 SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
 
-PICS="$(ls ${DIR} | grep -e ".jpg$" -e ".jpeg$" -e ".png$" -e ".gif$")"
+PICS="$(ls ${DIR} | grep -e ".jpg$" -e ".jpeg$" -e ".png$" -e ".gif$" -e ".webp$")"
 
 max=$(echo -e "$PICS" | wc -l)
 min=1
-choice=$(echo -e "$PICS" | rofi -dmenu -scroll-method 0 -terminal kitty -theme "$HOME"/.config/rofi/config/runner.rasi -p "Wallpaper or random")
+choice=$(echo -e "$PICS" | rofi -dmenu -scroll-method 0 -terminal kitty -theme "$HOME"/.config/rofi/config/wallpaper.rasi -p "")
 if [[ -n "$choice" ]]; then
 		option="$DIR/$choice"
 	if [[ $choice == "random" ]]; then

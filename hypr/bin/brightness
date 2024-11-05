@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# script has problems with permisions, tried add ing group permisions to the brightness file. no luck
+# This script requires the `bc` package to perform the calculations
+
+cd /sys/class/backlight/intel_backlight
+read max < max_brightness
+read cur < brightness
+echo "[$max]sa [0]sb $cur $((max/20)) $1 d 0 >b d $max <a p" \
+	| dc >> brightness 2>/dev/null
+
+# Explanation of the string passed to dc:
+#     "[$max]sa": Saves the value of max in register a.
+#     "[0]sb": Saves the value 0 in register b.
+#     $cur: The current brightness value.
+#     $((max/20)): Divides the maximum brightness by 20. This provides an increment (or step) to adjust brightness in steps of 5% (100% / 20 = 5%).
+#     $1: Refers to the first parameter passed to the script when it's executed (for example, the user can pass + or - to adjust the brightness).
+#     The rest of the string includes instructions to dc to manipulate the brightness:
+#         d: Duplicate the value on the stack.
+#         0 >b: Stores 0 in register b for later use.
+#         d $max <a: Duplicates and retrieves the maximum brightness from register a.
+#         p: Prints the calculated result.
+#     The output of dc is redirected to the brightness file using >> brightness. This adjusts the screen's brightness.
+#     2>/dev/null: Suppresses any error messages by redirecting them to /dev/null.

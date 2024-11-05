@@ -1,161 +1,132 @@
-@import "mocha.css";
-
 * {
-  /* `otf-font-awesome` is required to be installed for icons */
-  font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
+  border: none;
+  border-radius: 10;
+  font-family: "JetbrainsMono Nerd Font";
+  font-size: 10px;
+  min-height: 0px;
 }
 
 window#waybar {
-  background-color: alpha(@base, 0.8);
-  color: @text;
-  transition-property: background-color;
-  transition-duration: 0.5s;
+  background: transparent;
 }
 
 window#waybar.hidden {
   opacity: 0.2;
 }
 
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
-
-window#waybar.termite {
-  background-color: #3f3f3f;
+#window {
+  border-radius: 10px;
+  transition: none;
+  color: transparent;
+  background: transparent;
 }
 
-window#waybar.chromium {
-  background-color: #000000;
-  border: none;
-}
-
-button {
-  /* Use box-shadow instead of border so the text isn't offset */
-  box-shadow: inset 0 -3px transparent;
-  /* Avoid rounded borders under each button name */
-  border: none;
-  border-radius: 5px;
-}
-
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-button:hover {
-  background: inherit;
-  box-shadow: inset 0 -2px @text;
+#workspaces {
+  margin: 4px;
+  font-size: 4px;
+  background: rgba(17, 17, 27, 0.38);
+  transition: none;
+  border-radius: 16px;
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
 }
 
 #workspaces button {
-  padding: 0 6px;
-  background-color: transparent;
-  color: @text;
-  border-radius: 5px;
-  margin: 0 2px;
+  transition: none;
+  color: #cdd6f4;
+  background: transparent;
+  font-size: 10px;
+  border-radius: 2px;
 }
 
-#workspaces button:hover {
-  background: alpha(@crust, 0.2);
-}
-
-#workspaces button.focused {
-  background-color: @overlay0;
-  box-shadow: inset 0 -2px @text;
+#workspaces button.occupied {
+  transition: none;
+  color: #f28fad;
+  background: transparent;
+  font-size: 4px;
 }
 
 #workspaces button.active {
-  background-color: alpha(@overlay0, 0.7);
-  box-shadow: inset 0 -2px @text;
+  /* color: #f38ba8; */
+  color: #fab387;
 }
 
-#workspaces button.visible {
-  background-color: alpha(@overlay0, 0.2);
-  box-shadow: inset 0 -2px @text;
+#workspaces button:first-child:hover {
+  transition: none;
+  text-shadow: inherit;
+  background: rgba(147, 153, 178, 0.38);
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
 }
 
-#workspaces button.urgent {
-  background-color: @red;
+#workspaces button:last-child:hover {
+  transition: none;
+  text-shadow: inherit;
+  background: rgba(147, 153, 178, 0.38);
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+#workspaces button:hover {
+  transition: none;
+  text-shadow: inherit;
+  background: rgba(147, 153, 178, 0.38);
+}
+
+#workspaces button.active:hover {
+  color: #eba0ac;
 }
 
 #submap {
-  background-color: alpha(@overlay0, 0.7);
-  box-shadow: inset 0 -2px @mauve;
+  margin: 4px;
   padding: 0 8px;
-  border-radius: 5px;
+  background: rgba(250, 179, 135, 0.38);
+  transition: none;
+  border-radius: 16px;
+  box-shadow:
+    inset -1px -1px 0 0 #eba0ac,
+    inset 0 0 1px 1px #eba0ac,
+    inset -1px -1px 0 0 #f2cdcd;
 }
 
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#network,
-#pulseaudio,
-#wireplumber,
-#custom-media,
-#tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#mpd {
-  padding: 0 16px;
-  color: @text;
+#network {
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #bd93f9;
 }
 
-#window,
-#workspaces {
-  margin: 0 4px;
-  font-weight: normal;
-  font-style: italic;
-}
-
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
-  margin-left: 0;
-}
-
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #workspaces {
-  margin-right: 0;
-}
-
-#clock {
-  /* background-color: alpha(@overlay1, 0.7); */
-  box-shadow: inset 0 -2px @lavender;
-  border-radius: 5px;
+#pulseaudio {
+  border-radius: 10px;
+  transition: none;
+  color: #cdd6f4;
+  margin-right: 8px;
 }
 
 #battery {
-  /* background-color: alpha(@overlay0, 0.7); */
-  color: @text;
-  box-shadow: inset 0 -2px @lavender;
-  border-radius: 5px;
+  margin: 4px;
+  padding: 0 8px;
+  border-radius: 16px;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #cdd6f4;
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
 }
 
 #battery.charging,
 #battery.plugged {
-  color: @green;
-  /* background-color: alpha(@overlay0, 0.7); */
-  box-shadow: inset 0 -2px @lavender;
-  border-radius: 5px;
-}
-
-@keyframes blink {
-  to {
-    background-color: @text;
-    color: @crust;
-  }
+  color: #161320;
+  background-color: #b5e8e0;
 }
 
 #battery.critical:not(.charging) {
-  background-color: @red;
-  color: @text;
+  background-color: #b5e8e0;
+  color: #161320;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;
@@ -163,171 +134,162 @@ button:hover {
   animation-direction: alternate;
 }
 
-label:focus {
-  background-color: @crust;
+@keyframes blink {
+  to {
+    background-color: #bf616a;
+    color: #b5e8e0;
+  }
 }
 
-#cpu {
-  background-color: @green;
-  color: @crust;
+#periferals {
+  margin: 4px;
+  padding: 0 8px;
+  border-radius: 16px;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #b5e8e0;
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
 }
 
-#memory {
-  background-color: @mauve;
-}
-
-#disk {
-  background-color: @maroon;
+#hardware {
+  margin: 4px;
+  padding: 0 8px;
+  border-radius: 16px;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #b5e8e0;
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
 }
 
 #backlight {
-  box-shadow: inset 0 -2px @overlay1;
-  border-radius: 5px;
+  border-radius: 16px;
+  transition: none;
+  color: #cdd6f4;
 }
 
-#network {
-  box-shadow: inset 0 -2px @lavender;
-  border-radius: 5px;
+#clock {
+  margin: 4px;
+  padding: 0 8px;
+  border-radius: 16px;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #cdd6f4;
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
 }
 
-#network.disconnected {
-  background-color: @red;
+#memory {
+  margin-right: 8px;
+  border-radius: 16px;
+  transition: none;
+  color: #cdd6f4;
 }
 
-#pulseaudio {
-  box-shadow: inset 0 -2px @lavender;
-  color: @text;
-  border-radius: 5px;
-}
-
-#pulseaudio.muted {
-  color: @red;
-}
-
-#wireplumber {
-  background-color: @text;
-  color: @crust;
-}
-
-#wireplumber.muted {
-  background-color: @red;
-}
-
-#custom-media {
-  background-color: @green;
-  color: @teal;
-  min-width: 100px;
-}
-
-#custom-spotify {
-  color: #1db954;
-}
-
-#custom-media.custom-vlc {
-  background-color: #ffa000;
-}
-
-#temperature {
-  background-color: #f0932b;
-}
-
-#temperature.critical {
-  background-color: @red;
-}
-
-#tray {
-  background-color: @mauve;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 0;
-}
-
-#tray > .passive {
-  -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-  /* -gtk-icon-effect: highlight; */
-  background-color: @red;
-}
-
-#idle_inhibitor {
-  box-shadow: inset 0 -2px @lavender;
-  border-radius: 5px;
-}
-
-#idle_inhibitor.activated {
-  background-color: @surface2;
-  color: @text;
-}
-
-#mpd {
-  background-color: @green;
-  color: @teal;
-}
-
-#mpd.disconnected {
-  background-color: @red;
-}
-
-#mpd.stopped {
-  background-color: @surface0;
-}
-
-#mpd.paused {
-  background-color: @green;
+#cpu {
+  border-radius: 16px;
+  transition: none;
+  color: #cdd6f4;
 }
 
 #language {
-  background: @green;
-  color: @mauve;
-  padding: 0 5px;
-  margin: 0 5px;
-  min-width: 16px;
+  margin-right: 8px;
+  border-radius: 16px;
+  transition: none;
+  color: #cdd6f4;
 }
 
-#keyboard-state {
-  background: @green;
-  color: #000000;
-  padding: 0 0px;
-  margin: 0 5px;
-  min-width: 16px;
+#temperature {
+  margin-right: 8px;
+  border-radius: 16px;
+  transition: none;
+  color: #cdd6f4;
 }
 
-#keyboard-state > label {
-  padding: 0 5px;
+#tray {
+  margin: 4px;
+  padding: 0 12px;
+  border-radius: 18px;
+  transition: none;
+  color: #b5e8e0;
+  background: rgba(17, 17, 27, 0.38);
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
 }
 
-#keyboard-state > label.locked {
-  background: alpha(@crust, 0.2);
+#custom-launcher {
+  font-size: 10px;
+  border-radius: 10px;
+  transition: none;
+  color: #89dceb;
+  background: rgba(17, 17, 27, 0.38);
 }
 
-#scratchpad {
-  background: alpha(@crust, 0.2);
+#custom-power {
+  font-size: 10px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #f28fad;
 }
 
-#scratchpad.empty {
-  background-color: transparent;
+#custom-wallpaper {
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #c9cbff;
 }
 
-#privacy {
-  padding: 0;
+#custom-powermenu {
+  margin-top: 4px;
+  margin: 4px;
+  padding: 0 12px 0 8px;
+  border-radius: 50%;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #f38ba8;
+  box-shadow:
+    inset -1px -1px 0 0 #f38ba8,
+    inset 0 0 1px 1px #f38ba8,
+    inset -1px -1px 0 0 #eba0ac;
 }
 
-#privacy-item {
-  padding: 0 5px;
-  color: @text;
+#custom-updates {
+  margin-top: 4px;
+  margin: 4px;
+  padding: 0 8px;
+  border-radius: 16px;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #cdd6f4;
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
 }
 
-#privacy-item.screenshare {
-  background-color: @maroon;
+#custom-ddcutil {
+  margin-right: 8px;
+  border-radius: 16px;
+  transition: none;
+  color: #cdd6f4;
 }
 
-#privacy-item.audio-in {
-  background-color: @green;
-}
-
-#privacy-item.audio-out {
-  background-color: @blue;
+#custom-media {
+  margin-top: 4px;
+  margin: 4px;
+  padding: 0 8px;
+  border-radius: 16px;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #cdd6f4;
 }

@@ -17,9 +17,9 @@ window {
     transparency:                   "real";
     background-color:               @BG;
     text-color:                     @FG;
-    border:                  	    2px;
-    border-color:                   @BGA;
-    border-radius:                  10px;
+		background-image:								linear-gradient(45deg,#96CDFBff,#CBA6F7ff); 
+		border-radius:									16px;
+		padding:												3px; 
     width:                          110px;
     x-offset:                       -1%;
     y-offset:                       0;
@@ -54,7 +54,7 @@ entry {
     horizontal-align:               0;
     placeholder:                    "Search...";
     blink:                          true;
-    border:                  	    0px 0px 2px 0px;
+    border:													0px 0px 2px 0px;
     border-color:                   @BDR;
     border-radius:                  10px;
     padding:                        8px;
@@ -65,7 +65,7 @@ inputbar {
     background-color:               @BG;
     text-color:                     @FG;
     expand:                         false;
-    border:                  	    0px 0px 0px 0px;
+    border:													0px 0px 0px 0px;
     border-radius:                  0px;
     border-color:                   @BDR;
     margin:                         0px 0px 0px 0px;
@@ -83,7 +83,7 @@ case-indicator {
 listview {
     background-color:               @BG;
     columns:                        1;
-    lines:			                5;
+    lines:													5;
     spacing:                        15px;
     cycle:                          true;
     dynamic:                        true;
@@ -95,6 +95,7 @@ mainbox {
     children:                       [ listview ];
     spacing:                        15px;
     padding:                        15px;
+		border-radius:									13px;
 }
 
 element {
@@ -102,7 +103,7 @@ element {
     text-color:                     @FG;
     orientation:                    horizontal;
     border-radius:                  10px;
-    padding:                        20px;
+    padding:                        20px 10px 20px 15px;
 }
 
 element-icon {

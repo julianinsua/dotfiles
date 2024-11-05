@@ -25,10 +25,14 @@ fi
 export VISUAL='nvim'
 precmd() { print "" }
 
+fpath+=~/.zfunc
 autoload -Uz compinit
 setopt PROMPT_SUBST
 compinit
 zstyle ':completion:*' menu select
+# style completion selection
+# zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS} "ma=48;5;153;1"
+zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 
 # ALIASES
 alias vim="nvim"
@@ -37,14 +41,12 @@ alias ls="eza --color=always --classify --icons --git --no-filesize --no-time --
 alias lsa="eza --color=always --classify --icons --git -lha"
 alias cat="bat"
 alias lock="swaylock"
-alias nvk='NVIM_APPNAME="nvim-kickstart" nvim'
-alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
 alias icat='kitten icat'
 
 # PATH
 export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
 export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
-export PATH=$HOME/.tmux/plugins/tmuxifier/bin:$PATH
+export PATH=$HOME/.config/tmux/plugins/tmuxifier/bin:$PATH
 
 # Exporting go root dir and delve to path
 export GOPATH=$HOME/go
@@ -56,6 +58,7 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.zsh/timer/timer.zsh
 source ~/.zsh/fzf-git.sh/fzf-git.sh
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -104,7 +107,6 @@ _fzf_comprun() {
   esac
 }
 
-
 # Set up bat to use catpuccin mocha theme to highlight
 export BAT_THEME="Catppuccin Mocha"
 
@@ -118,3 +120,13 @@ PROMPT=$'%B%F{blue}  %F{#cba6f7}%~ %F{#6c7086}$(parse_git_branch) $(get_statu
 RPROMPT=''
 
 source /usr/share/nvm/init-nvm.sh
+
+# React native variables
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Created by `pipx` on 2024-07-17 08:36:34
+export PATH="$PATH:/home/julian/.local/bin"
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+output=$(ddcutil -t getvcp 10 2>/dev/null)
+
+if [ $? -eq 0 ]; then
+    trimmed=${output#* * * }
+    value=${trimmed%% *}
+
+		ddcutil setvcp 10 $((value + 10))
+else
+    echo pepito
+fi
+
+
+if [ -z "$1" ]; then
+  echo "No parameter provided. Usage: ./script.sh [up|down]"
+  exit 1
+fi
+
+# Take the first parameter (positional parameter $1)
+if [ "$1" == "up" ]; then
+  # Do something if "up" is provided
+  echo "The system is going up!"
+  
+  # Example action: adding a number to a variable
+  num=5
+  num=$((num + 1))
+  echo "Incremented number: $num"
+
+elif [ "$1" == "down" ]; then
+  # Do something if "down" is provided
+  echo "The system is going down!"
+  
+  # Example action: subtracting a number from a variable
+  num=5
+  num=$((num - 1))
+  echo "Decremented number: $num"
+
+else
+  echo "Invalid parameter. Use 'up' or 'down'."
+fi

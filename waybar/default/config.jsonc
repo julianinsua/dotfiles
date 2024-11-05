@@ -6,22 +6,21 @@
     "spacing": 8, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "hyprland/workspaces",
+        "tray",
         "hyprland/submap",
         "custom/spotify"
     ],
     "modules-center": [
-        "hyprland/window"
+        "hyprland/workspaces"
+        // "hyprland/window"
     ],
     "modules-right": [
-        "idle_inhibitor",
         "pulseaudio",
         "backlight",
         "network",
         "battery",
         "battery#bat2",
-        "clock",
-        "tray"
+        "clock"
     ],
     // Modules configuration
     "hyprland/workspaces": {

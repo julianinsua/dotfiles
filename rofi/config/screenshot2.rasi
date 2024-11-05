@@ -1,6 +1,7 @@
 configuration {
     show-icons:                     false;
-    display-run: 		            "";
+    display-drun: 		            "";
+    drun-display-format:            "{icon} {name}";
     disable-history:                false;
     click-to-exit: 		            true;
     location:                       0;
@@ -8,6 +9,9 @@ configuration {
 
 @import "font.rasi"
 @import "colors.rasi"
+
+/* Line Responsible For Button Layouts */
+/* BUTTON = FALSE */
 
 window {
     transparency:                   "real";
@@ -26,17 +30,17 @@ prompt {
     enabled: 			            true;
     padding: 			            8px;
     background-color: 		        @BG;
-    text-color: 		            @IMG;
+    text-color: 		            @FG;
 }
 
 textbox-prompt-colon {
     expand: 			            false;
-    str: 			                "󰑮";
+    str: 			                " ";
     border-radius:                  100%;
     background-color:               @BG;
     text-color:                     @FG;
     padding:                        8px 12px 8px 12px;
-	font:							"Iosevka Nerd Font 10";
+    font:			                "Iosevka Nerd Font 10";
 }
 
 entry {
@@ -45,16 +49,16 @@ entry {
     placeholder-color:              @FG;
     expand:                         true;
     horizontal-align:               0;
-    placeholder:                    "Run...";
+    placeholder:                    "Search...";
     blink:                          true;
-    border:                  		0px 0px 2px 0px;
-    border-color:                  	@BDR;
+    border:                  	    0px 0px 2px 0px;
+    border-color:                   @BDR;
     border-radius:                  10px;
     padding:                        8px;
 }
 
 inputbar {
-	children: 						[ textbox-prompt-colon, prompt, entry ];
+	children: 						[ textbox-prompt-colon, prompt ];
     background-color:               @BG;
     text-color:                     @FG;
     expand:                         false;
@@ -115,19 +119,6 @@ element-text {
     margin:                         2px 0px 2px 2px;
 }
 
-element normal.urgent,
-element alternate.urgent {
-    background-color:               @UGT;
-    text-color:                     @FG;
-    border-radius:                  9px;
-}
-
-element normal.active,
-element alternate.active {
-    background-color:               @BGA;
-    text-color:                     @FG;
-}
-
 element selected {
     background-color:               @BGA;
     text-color:                     @SEL;
@@ -136,12 +127,24 @@ element selected {
     border-color:                  	@BDR;
 }
 
-element selected.urgent {
-    background-color:               @UGT;
-    text-color:                     @FG;
+element.active,
+element.selected.urgent {
+  background-color: @ON;
+  text-color: @BG;
+  border-color: @ON;
 }
 
-element selected.active {
-    background-color:               @BGA;
-    color:                          @FG;
+element.selected.urgent {
+  border-color: @BDR;
+}
+
+element.urgent,
+element.selected.active {
+  background-color: @OFF;
+  text-color: @BG;
+  border-color: @OFF;
+}
+
+element.selected.active {
+  border-color: @BDR;
 }

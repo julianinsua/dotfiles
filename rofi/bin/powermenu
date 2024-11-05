@@ -20,11 +20,11 @@ else
 	if [[ "$layout" == "TRUE" ]]; then
   # Section 1
 
-		shutdown=""
-		reboot=""
-		lock=""
-		suspend=""
-		logout="󰿅"
+		shutdown=" "
+		reboot=" "
+		lock=" "
+		suspend=" "
+		logout="󰿅 "
   # Section 2
 #		shutdown="襤"
 #		reboot="ﰇ"
@@ -90,14 +90,14 @@ case $chosen in
         fi
         ;;
     $lock)
-        swaylock
+	    hyprlock
         ;;
     $suspend)
 		ans=$(rdialog &)
 		if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
 			mpc -q pause
 			amixer set Master mute
-			sh $HOME/.local/bin/lock
+			hyprlock # use hyprlock
 			systemctl suspend
 		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
 			exit
