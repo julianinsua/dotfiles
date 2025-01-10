@@ -18,6 +18,10 @@ if [ $? -eq 0 ]; then
         ddcutil setvcp 10 $((value + 10))
     elif [ "$1" == "down" ]; then
         ddcutil setvcp 10 $((value - 10))
+    elif [ "$1" == "dim" ]; then
+        ddcutil setvcp 10 10
+    elif [ "$1" == "restore" ]; then
+        ddcutil setvcp 10 40
     fi
 else
     echo {\"percentage\": $(cat /tmp/waybar_ddcutil_value 2>/dev/null || echo 0)}
