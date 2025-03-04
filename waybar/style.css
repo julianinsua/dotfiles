@@ -105,16 +105,11 @@ window#waybar.hidden {
 }
 
 #battery {
-  margin: 4px;
-  padding: 0 8px;
+  padding: 0 4px;
   border-radius: 16px;
   transition: none;
   background: rgba(17, 17, 27, 0.38);
   color: #cdd6f4;
-  box-shadow:
-    inset -1px -1px 0 0 #89b4fa,
-    inset 0 0 1px 1px #89b4fa,
-    inset -1px -1px 0 0 #cba6f7;
 }
 
 #battery.charging,
@@ -164,6 +159,35 @@ window#waybar.hidden {
     inset -1px -1px 0 0 #89b4fa,
     inset 0 0 1px 1px #89b4fa,
     inset -1px -1px 0 0 #cba6f7;
+}
+
+#battery-drawer {
+  margin: 4px;
+  padding: 0 8px;
+  border-radius: 16px;
+  transition: none;
+  background: rgba(17, 17, 27, 0.38);
+  color: #cdd6f4;
+  box-shadow:
+    inset -1px -1px 0 0 #89b4fa,
+    inset 0 0 1px 1px #89b4fa,
+    inset -1px -1px 0 0 #cba6f7;
+}
+
+#power-profiles-daemon {
+  margin: 4px;
+}
+
+#power-profiles-daemon.performance {
+  color: #f9e2af;
+}
+
+#power-profiles-daemon.balanced {
+  color: #89b4fa;
+}
+
+#power-profiles-daemon.power-saver {
+  color: #a6e3a1;
 }
 
 #backlight {

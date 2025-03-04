@@ -13,8 +13,8 @@
         "custom/updates",
         "group/periferals",
         "clock",
-        "battery",
-				"custom/powermenu"
+        "group/battery-drawer",
+        "custom/powermenu"
     ],
     "pulseaudio": {
         "tooltip": true,
@@ -68,8 +68,8 @@
         "modules": [
             "pulseaudio",
             "backlight",
-						"custom/ddcutil",
-            "hyprland/language",
+            "custom/ddcutil",
+            "hyprland/language"
         ]
     },
     "group/hardware": {
@@ -81,7 +81,14 @@
         "modules": [
             "cpu",
             "memory",
-            "temperature",
+            "temperature"
+        ]
+    },
+    "group/battery-drawer": {
+        "orientation": "horizontal",
+        "modules": [
+            "power-profiles-daemon",
+            "battery"
         ]
     },
     "network": {
@@ -109,7 +116,7 @@
             "warning": 30,
             "critical": 20
         },
-        "format": "{icon}  {capacity}%",
+        "format": "{icon} {capacity}%",
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
@@ -120,6 +127,17 @@
             " ",
             " "
         ]
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "󰗑",
+            "performance": "󱐋",
+            "balanced": "󰗑",
+            "power-saver": "󰌪"
+        }
     },
     "tray": {
         "icon-size": 16,
@@ -155,35 +173,39 @@
             ""
         ]
     },
-		"custom/media": {
-			"format": "{icon} {0}",
-			"tooltip": true,
-			"tooltip-format": "{0}",
-			"format-icons": {
-				"firefox": "<span foreground=\"#FF9500\"> </span>",
-				"spotify": "<span foreground=\"#1ED760\"> </span>",
-				"chromium": "<span foreground=\"#1A73E8\"> </span>",
-				"vlc": "<span foreground=\"#E85E00\">󰕼 </span>",
-			},
-			"escape": true,
-			"return-type": "json",
-			"max-length": 30,
-			"on-click": "playerctl play-pause",
-			"on-click-right": "playerctl stop",
-			"smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
-			"on-scroll-up": "playerctl next",
-			"on-scroll-down": "playerctl previous",
-			"exec": "/usr/bin/python3 $HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in waybar/resources/custom_modules folder
-		},
-		"custom/ddcutil": {
-			"format": "{percentage}% {icon}",
-			"interval": 1,
-			"format-icons": ["󰍹", "󰷜", "󱄄"],
-			"exec": "$HOME/.config/waybar/waybar-ddcutil",
-			"on-click": "$HOME/.config/waybar/waybar-ddcutil up",
-			"on-click-right": "$HOME/.config/waybar/waybar-ddcutil down",
-			"return-type": "json"
-		},
+    "custom/media": {
+        "format": "{icon} {0}",
+        "tooltip": true,
+        "tooltip-format": "{0}",
+        "format-icons": {
+            "firefox": "<span foreground=\"#FF9500\"> </span>",
+            "spotify": "<span foreground=\"#1ED760\"> </span>",
+            "chromium": "<span foreground=\"#1A73E8\"> </span>",
+            "vlc": "<span foreground=\"#E85E00\">󰕼 </span>"
+        },
+        "escape": true,
+        "return-type": "json",
+        "max-length": 30,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl stop",
+        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "exec": "/usr/bin/python3 $HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in waybar/resources/custom_modules folder
+    },
+    "custom/ddcutil": {
+        "format": "{percentage}% {icon}",
+        "interval": 1,
+        "format-icons": [
+            "󰍹",
+            "󰷜",
+            "󱄄"
+        ],
+        "exec": "$HOME/.config/waybar/waybar-ddcutil",
+        "on-click": "$HOME/.config/waybar/waybar-ddcutil up",
+        "on-click-right": "$HOME/.config/waybar/waybar-ddcutil down",
+        "return-type": "json"
+    },
     "custom/launcher": {
         "format": " ",
         "on-click": "rofi -show drun",
@@ -204,8 +226,8 @@
         "format": " ",
         "on-click": "bash ~/.config/system_scripts/pkill_bc"
     },
-		"custom/powermenu": {
-				"format": "",
-				"on-click": "bash ~/dotfiles/rofi/bin/powermenu"
-		}
+    "custom/powermenu": {
+        "format": "",
+        "on-click": "bash ~/dotfiles/rofi/bin/powermenu"
+    }
 }
