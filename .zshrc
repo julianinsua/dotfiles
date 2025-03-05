@@ -107,6 +107,54 @@ _fzf_comprun() {
   esac
 }
 
+fzf_git_branches_widget() {
+  _fzf_git_branches
+}
+fzf_git_hashes_widget() {
+  _fzf_git_hashes
+}
+fzf_git_reflogs_widget() {
+  _fzf_git_lreflogs
+}
+fzf_git_files_widget() {
+  _fzf_git_files
+}
+fzf_git_tags_widget() {
+  _fzf_git_tags
+}
+fzf_git_remotes_widget() {
+  _fzf_git_remotes
+}
+fzf_git_stashes_widget() {
+  _fzf_git_stashes
+}
+fzf_git_worktrees_widget() {
+  _fzf_git_worktrees
+}
+fzf_git_eachref_widget() {
+  _fzf_git_each_ref
+}
+
+zle -N fzf_git_branches_widget # register branches widget
+zle -N fzf_git_hashes_widget # register hashes widget
+zle -N fzf_git_reflogs_widget # register log widget
+zle -N fzf_git_files_widget # register files widget
+zle -N fzf_git_tags_widget # register tags widget
+zle -N fzf_git_remotes_widget # register remotes widget
+zle -N fzf_git_stashes_widget # register remotes widget
+zle -N fzf_git_worktrees_widget # register remotes widget
+zle -N fzf_git_eachref_widget # register remotes widget
+
+bindkey '\eg\eb' fzf_git_branches_widget
+bindkey '\eg\eh' fzf_git_hashes_widget
+bindkey '\eg\el' fzf_git_reflogs_widget
+bindkey '\eg\ef' fzf_git_files_widget
+bindkey '\eg\et' fzf_git_tags_widget
+bindkey '\eg\er' fzf_git_remotes_widget
+bindkey '\eg\es' fzf_git_stashes_widget
+bindkey '\eg\ew' fzf_git_worktrees_widget
+bindkey '\eg\ee' fzf_git_eachref_widget
+
 # Set up bat to use catpuccin mocha theme to highlight
 export BAT_THEME="Catppuccin Mocha"
 
