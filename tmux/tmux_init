@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+newSession() {
+	echo $(tmux new -dPF '#{session_id}' -s $1 -c $2)
+}
+
+runCommand() {
+	tmux send-keys -t "$1" "$2" C-m
+}
+
+kanataSession=$(newSession kanata ~/dotfiles/kanata)
+fmSession = $(newSession frontend-markets ~/code/frontend-markets/)
+
+runCommand $fmSession "nvim"
+
+runCommand $kanataSession "sudo kanata --cfg ~/dotfiles/kanata/kanata.kbd"
+
+tmux attach-session -t "$kanataSession"

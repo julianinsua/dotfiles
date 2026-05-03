@@ -1,0 +1,31 @@
+
+[[session]]
+name = "work"
+path = "~/code/frontend-markets/"
+startup_command = "NVIM_APPNAME=\"nvim-kickstart\" nvim"
+windows = ["run"]
+
+[[window]]
+name = "run"
+startup_script = "lsa jinsua"
+
+[[session]]
+name = "kanata"
+path = "~/dotfiles/kanata"
+startup_command = "sudo kanata --cfg ~/dotfiles/kanata/kanata2.kbd"
+
+[[session]]
+name = "zettlekasten"
+path = "~/Library/CloudStorage/Dropbox/zettlekasten/"
+startup_command = "NVIM_APPNAME=\"nvim-kickstart\" nvim -c \":Telescope find_files\""
+windows = ["cursor"]
+
+[[window]]
+name = "cursor"
+startup_script = "agent"
+
+[[session]]
+name = "tmux config"
+path = "~/dotfiles/tmux/"
+startup_command = "NVIM_APPNAME=\"nvim-kickstart\" nvim tmux.conf"
+preview_command = "bat --color=always ~/c/dotfiles/.config/tmux/tmux.conf"# [[sesion]]

@@ -1,0 +1,82 @@
+(defcfg process-unmapped-keys yes)
+
+(defsrc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lalt lmet           spc            rmet cmp  rctl
+)
+
+(defvar
+  tap-timeout			250
+  hold-timeout		250
+  mouse-timeout		50
+	mouse-movement	24
+	mouse-wheel			3
+  tt $tap-timeout
+  ht $hold-timeout
+	mt $mouse-timeout
+	mm $mouse-movement
+	mw $mouse-wheel
+)
+
+(defalias
+  nav	(layer-while-held nav)									;; Hold for nav layer
+  qwe	(layer-switch qwerty)										;; Back to the querty layer
+  meh	(multi lctl lalt lmet)									;; one key to meh 
+  escl  (tap-hold-release $tt $ht esc @qwe)		;; Esc on tap and qwerty if held
+  sspc  (tap-hold-release $tt $ht spc @meh)		;; Hold space gives you super key
+  hra	(tap-hold-release $tt $ht a lmet)				;; Home Row Mod a - Cmd
+  hrs	(tap-hold-release $tt $ht s lalt)				;; Home Row Mod s - Alt
+  hrd	(tap-hold-release $tt $ht d lctl)				;; Home Row Mod d - Ctrl
+  hrf	(tap-hold-release $tt $ht f lsft)				;; Home Row Mod f - Shift
+  hrl	(tap-hold-release $tt $ht l lalt)				;; Home Row Mod l - Alt
+  hrk	(tap-hold-release $tt $ht k lctl)				;; Home Row Mod k - Ctrl
+  hrj	(tap-hold-release $tt $ht j lsft)				;; Home Row Mod j - Shift
+  hr;	(tap-hold-release $tt $ht ; lmet)				;; Home Row Mod ; - Cmd
+  num (layer-while-held num)									;; Nums while pressing
+  tnum (layer-switch num)											;; Stay in nums layer
+	mous (layer-while-held mouse)								;; Move to the mouse layer
+	lm (movemouse-left $mt $mm)									;; Move mouse left
+	dm (movemouse-down $mt $mm)									;; Move mouse down
+	um (movemouse-up $mt $mm)										;; Move mouse up
+	rm (movemouse-right $mt $mm)								;; Move mouse right
+	lw (mwheel-left $mt $mw)										;; Scroll left
+	dw (mwheel-up $mt $mw)											;; Scroll down (scroll movement is reversed by default)
+	uw (mwheel-down $mt $mw)										;; Scroll up (scroll movement is reversed by default)
+	rw (mwheel-right $mt $mw)										;; Scroll right
+)
+
+(deflayer qwerty
+  grv   1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
+  @escl @hra @hrs @hrd @hrf g    h    @hrj @hrk @hrl @hr; '    ret
+  lsft  z    x    c    v    b    n    m    ,    .    /    rsft
+  @mous @nav @num           @sspc          ralt  cmp  rctl
+)
+
+(deflayer num
+  _     _    _    _    _    _    _    _    _    _    _    _    _    _
+  tab   S-1  S-2  S-3  S-4  S-5  S-6  S-7  S-8  S-9  S-0  S-min _    \
+  @escl 1    2    3    4    5    6    7    8    9    0    -    ret
+  \     +    =    S-[  S-]  S-grv [   ]    bspc del  `    S-\
+  lctl  lmet lalt           @sspc          ralt cmp  rctl
+)
+
+(deflayer nav
+  _     _    _    _    _    _    _    _    _    _     _    _    _    _
+  _     f1   f2   f3   f4   f5   f6   f7   f8   f9    f10  f11  f12  _
+  @escl _    home pgup pgdn end  left down up   right ;    '    ret
+  _     mute vold volu _    _    _    prev pp   next  _    _
+  _     _    lalt           @sspc          _    _     _
+)
+
+(deflayer mouse
+  _     _    _    _    _    _    _    _    _    _     _    _    _    _
+  _     _    _    _    _    _    _    _    _    _     _    _    _    _
+  _     _    _    _    _    _    @lm  @dm  @um  @rm   _    _    _
+  _     _    _    _    _    _    @lw  @dw  @uw  @rw   _    _
+  _     _    mrgt           mlft           _    _     _
+)
+
